@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>TakeIt</title>
+		<link rel="stylesheet" type="text/css" href="/views/main-style.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+DK+Uloopet:wght@100..400&display=swap" rel="stylesheet">
+	</head>
+    <body>
+		<div class="nav-bar playwrite-dk-uloopet">
+		<ul>
+			<li><a href="#Home">Home</a></li>
+			<li><a href="#Concert">Concert</a></li>
+			<li><a href="#Cart">Cart</a></li>
+			<li><a href="#Orderhistory">Order History</a></li>
+			<li><a href="#profile">Profile</a></li>
+		</ul>
+		</div>
+		
+			<div class="banner-container">
+				<div class="banner-track">
+					<div class="banner">
+						<div class="details-poster">
+						<img src="/views/Laufey.jpg" width="550px">
+						</div>
+						<div class="details-info playfair-display">
+							<div class="details-title">Laufey: A Matter of Time Tour in Hong Kong</div>
+							<div class="details-date">Tuesday, 12 May 2026</div>
+							<div class="details-location">AsiaWorld-Arena</div>
+							<div class="ticket-btn"><button>Ticket</button></div>
+						</div>
+					</div>
+
+					<div class="banner">
+						<div class="details-poster">
+						<img src="/views/tuki.jpg" width="550px">
+						</div>
+						<div class="details-info playfair-display">
+							<div class="details-title">tuki. 1st ASIA TOUR 2026 in HONG KONG</div>
+							<div class="details-date">Saturday&Sunday, 9-10 May 2026</div>
+							<div class="details-location">AsiaWorld-Runway 11</div>
+							<div class="ticket-btn"><button>Ticket</button></div>
+						</div>
+					</div>			
+					
+					<div class="banner">
+						<div class="details-poster">
+						<img src="/views/King Gnu.jpg" width="550px">
+						</div>
+						<div class="details-info playfair-display">
+							<div class="details-title">King Gnu CEN+RAL Tour 2026 - Hong Kong</div>
+							<div class="details-date">Friday&Saturday, 29-30 May 2026</div>
+							<div class="details-location">AsiaWorld-Arena</div>
+							<div class="ticket-btn"><button>Ticket</button></div>
+						</div>
+					</div>
+
+					<div class="banner">
+						<div class="details-poster">
+						<img src="/views/MC x CONSTANCE x Gareth.T" width="550px">
+						</div>
+						<div class="details-info playfair-display">
+							<div class="details-title">《b.balance presents Music is Live &#124; &#60;3 symbol of love &#124; MC x CONSTANCE x Gareth.T 》</div>
+							<div class="details-date playfair-display">Sunday, 16 May 2026</div>
+							<div class="details-location">AsiaWorld-Arena</div>
+							<div class="ticket-btn "><button>Ticket</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-container">
+				<div class="panel active" id="panel-1">
+					<div class="list-info list-name">ONE OK ROCK</div>
+					<div class="list-info list-date">Saturday&Sunday, 2-3 May 2026</div>
+					<div class="list-info list-location"> &#124; Central HarbourFront</div>
+				</div>
+
+				<div class="panel" id="panel-2">
+					<div class="list-info list-name">TREASURE</div>
+					<div class="list-info list-date">Saturday, 9 May 2026</div>
+					<div class="list-info list-location">&#124; AsiaWorld-Arena</div>
+				</div>
+
+				<div class="panel" id="panel-3">
+					<div class="list-info list-name">Sandy Lam Yik Lin</div>
+					<div class="list-info list-date">Saturday&Sunday, 16-17 May 2026</div>
+					<div class="list-info list-location">&#124; Kai Tak Stadium</div>
+				</div>
+
+				<div class="panel" id="panel-4">
+					<div class="list-info list-name">Jenevieve</div>
+					<div class="list-info list-date">Tuesday, 19 May 2026</div>
+					<div class="list-info list-location">&#124; TIDES</div>
+				</div>
+
+				<div class="panel" id="panel-5">
+					<div class="list-info list-name">EXO</div>
+					<div class="list-info list-date">Saturday&Sunday, 13-14 June 2026</div>
+					<div class="list-info list-location"> &#124; AsiaWorld-Arena</div>
+				</div>
+
+				<div class="panel" id="panel-6">
+					<div class="list-info list-name">ITZY</div>
+					<div class="list-info list-date">Saturday, 20 June 2026</div>
+					<div class="list-info list-location"> &#124; AsiaWorld-Arena</div>
+				</div>
+
+				<div class="panel" id="panel-7">
+					<div class="list-info list-name">LANY</div>
+					<div class="list-info list-date">Wednesday, 20 September 2026</div>
+					<div class="list-info list-location"> &#124; AsiaWorld-Expo, Hall 10</div>
+				</div>
+				
+			</div>
+    </body>
+	<script>
+		let panelsElement = document.querySelectorAll('.panel');
+		let removeActiveClasses = () => {
+			panelsElement.forEach(panel => {
+				panel.classList.remove('active');
+			});
+		};
+
+		panelsElement.forEach(panel => {
+			panel.addEventListener('click', () => {
+				removeActiveClasses();
+				panel.classList.add('active');
+			});
+		});
+	</script>
+</html>

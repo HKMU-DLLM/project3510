@@ -1,0 +1,211 @@
+/* font */
+.playwrite-dk-uloopet {
+  font-family: "Playwrite DK Uloopet", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.playfair-display {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+body {
+  background-color: #F5FBE6;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* navigation bar*/
+.nav-bar{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+ul{
+  display: flex;
+  list-style-type: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+ul li{
+  flex:1;
+}
+
+ul li a {
+  display: block;
+  color: #233D4D;
+  font-size: x-large;
+  text-decoration: none;
+  text-align: center;
+  position: relative;
+}
+
+ul li a::after {
+  content: "";
+  position: absolute;
+  left: 20%;
+  bottom: -2px;
+  height: 3px;
+  width: 0;
+  background: #233D4D;
+  transition: width 0.4s ease;
+}
+
+ul li a:hover::after {
+  width: 60%;
+}
+
+/* auto sliding banner */
+.banner-container{
+  width: min(70%);
+  margin: 0 auto;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.banner-track{
+  display: flex;
+  width: 400%;
+  animation: slide 30s infinite;
+}
+
+.banner{
+  flex: 0 0 25%;
+  position: relative;
+}
+
+img{
+  box-shadow: 10px 10px #fada85;
+}
+
+.details-info{
+  color: #233D4D;
+  position: absolute;
+  top: 5px;
+  left: 580px;
+  width: 400px;
+  height: 90%;
+}
+
+.details-title{
+  color: #FE7F2D;
+  font-size: 40px;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  font-weight: 500;
+}
+
+.details-date{
+  margin-top: 10px;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.details-location{
+  margin-top: 5px;
+  font-size: 20px;
+  opacity: 0.9;
+}
+
+.ticket-btn{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+button{
+  background-color: #215E61;
+  color: #F5FBE6;
+  font-family: "playfair-display",serif;
+  font-size: 25px;
+  height: 50px;
+  width: 230px;
+  border: none;
+  box-shadow: 10px 10px #fada85;
+}
+
+@keyframes slide{
+  0%   { transform: translateX(0%); }
+  20%  { transform: translateX(0%); }
+
+  25%  { transform: translateX(-25%); }
+  45%  { transform: translateX(-25%); }
+
+  50%  { transform: translateX(-50%); }
+  70%  { transform: translateX(-50%); }
+
+  75%  { transform: translateX(-75%); }
+  95%  { transform: translateX(-75%); }
+
+  100% { transform: translateX(0%); }
+}
+
+/* extending pannel */
+.panel-container{
+  width:70%;
+  margin: 0 auto; 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.panel{
+  height: 300px;
+  width: 100%;
+  flex: 1;
+  border:3px solid #233D4D;
+  border-right:none;
+  position: relative;
+}
+
+#panel-7{
+  border-right:3px solid #233D4D;
+}
+
+.list-info{
+  transition: all 0.5s linear;
+  transform: rotate(90deg);
+}
+
+.list-name{
+  position: absolute;
+  top: 150px; 
+  right: -120px;
+  width: 300px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.list-name::after{
+  content: '';
+  border-top: 2px solid;
+  margin: 0 20px 0 5px;
+  flex: 1 0 20px;
+  color: #666666;
+}
+
+.list-name ::after {
+	margin: 0 0 0 20px;
+}
+
+.list-date{
+  position: absolute;
+  top: 150px; 
+  right: -100px;
+  width: 300px;
+}
+
+.list-location{
+  position: absolute;
+  top: 150px; 
+  right: -80px;
+  width: 300px;
+}

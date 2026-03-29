@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -10,7 +9,14 @@ const server = http.createServer(app);
 
 const adminRouter = require("./routes/admin_auth");
 const concertRouter = require("./routes/concert");
+i18n.configure({
+  locales: ["en", "zh"],
+  directory: path.join(__dirname, "locales"),
+  defaultLocale: "en",
+  queryParameter: "lang"
+});
 
+app.use(i18n.init);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -36,29 +42,17 @@ const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
-=======
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const http = require("http");
 const i18n = require("i18n");
 const app = express();
-i18n.configure({
-  locales: ["en", "zh"],
-  directory: path.join(__dirname, "locales"),
-  defaultLocale: "en",
-  queryParameter: "lang"
-});
-
-app.use(i18n.init);
-const server = http.createServer(app);
 
 
-const concertRouter = require("./routes/concert");
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-app.use(express.static(path.join(__dirname, "public")));
+
 
 app.get("/", (req, res) => {
   console.log("New access to website");
@@ -72,4 +66,3 @@ const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
->>>>>>> 3121863aa5c85c9b40d7eb3b29fb868cf8222b01

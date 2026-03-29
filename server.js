@@ -3,9 +3,9 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const path = require("path");
 const http = require("http");
+const i18n = require("i18n");
 const app = express();
 const server = http.createServer(app);
-
 
 const adminRouter = require("./routes/admin_auth");
 const concertRouter = require("./routes/concert");
@@ -33,34 +33,12 @@ app.use(
 
 app.get("/", (req, res) => {
   console.log("New access to website");
-  res.status(200).render("main");
-});
-
-app.use("/admin", adminRouter);
-app.use("/concert", concertRouter);
-const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
-
-const express = require("express");
-const bodyParser = require("body-parser");
-const path = require("path");
-const http = require("http");
-const i18n = require("i18n");
-const app = express();
-
-
-
-
-
-app.get("/", (req, res) => {
-  console.log("New access to website");
   res.status(200).render("main", {
     title: res.__("title"),
     welcome: res.__("welcome")
   });
 });
+app.use("/admin", adminRouter);
 app.use("/concert", concertRouter);
 const PORT = 3000;
 server.listen(PORT, () => {

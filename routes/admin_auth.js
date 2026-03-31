@@ -1,4 +1,5 @@
 const express = require("express");
+const db = new Database('./database/database');
 const router = express.Router();
 const isAdmin = (req, res, next) => {
     if (req.session && req.session.isLoggedIn) {
@@ -30,6 +31,21 @@ router.post("/login", (req, res) => {
         return res.status(401).send("Invalid Username or Password. <a href='/admin/login'>Try again</a>");
     }
 	
+});
+
+router.post("/concerts/create", isAdmin, (req, res) => {
+    // Handle concert creation logic here
+    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date } = req.body;
+    try {
+        const stmt = db.prepare('INSERT INTO Concerts (title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        stmt.run(title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date);
+    } catch (error) {
+        console.error("Error inserting concert:", error);
+        return res.status(500).send("An error occurred while creating the concert. <a href='/admin/form'>Try again</a>");
+    }
+
+    // For now, just send a success response
+    return res.send("Concert created successfully! <a href='/admin/form'>Create another</a>");
 });
 
 module.exports = router;

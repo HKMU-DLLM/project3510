@@ -16,38 +16,48 @@
                     <h4 class="mb-0">Create New Concert Event</h4>
                 </div>
                 <div class="card-body">
-                    <form action="/concerts/create" method="POST">
+                    <form action="/admin/concerts/create" method="POST">
                         
                         <div class="mb-4">
                             <label for="title" class="form-label fw-bold">Concert Title</label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="e.g. Summer Rock Night" required>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="ZoneA_Ticket" class="form-label">Zone A Tickets (Capacity)</label>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="ZoneA_Ticket" class="form-label fw-bold">Zone A Capacity</label>
                                 <input type="number" class="form-control" id="ZoneA_Ticket" name="ZoneA_Ticket" value="150" min="0">
                             </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label for="ZoneB_Ticket" class="form-label">Zone B Tickets (Capacity)</label>
-                                <input type="number" class="form-control" id="ZoneB_Ticket" name="ZoneB_Ticket" value="150" min="0">
+                            <div class="col-md-6">
+                                <label for="ZoneA_Price" class="form-label fw-bold">Zone A Price ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="ZoneA_Price" name="ZoneA_Price" placeholder="e.g. 880" required>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="location" class="form-label">Location / Venue</label>
-                                <input type="text" class="form-control" id="location" name="location" placeholder="e.g. Madison Square Garden" required>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="ZoneB_Ticket" class="form-label fw-bold">Zone B Capacity</label>
+                                <input type="number" class="form-control" id="ZoneB_Ticket" name="ZoneB_Ticket" value="150" min="0">
                             </div>
-
-                            <div class="col-md-6 mb-4">
-                                <label for="date" class="form-label">Event Date</label>
-                                <input type="date" class="form-control" id="date" name="date" required>
+                            <div class="col-md-6">
+                                <label for="ZoneB_Price" class="form-label fw-bold">Zone B Price ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="ZoneB_Price" name="ZoneB_Price" placeholder="e.g. 480" required>
                             </div>
                         </div>
 
                         <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="location" class="form-label fw-bold">Location / Venue</label>
+                                <input type="text" class="form-control" id="location" name="location" placeholder="e.g. Madison Square Garden" required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label for="date" class="form-label fw-bold">Event Date</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                        </div>
 
                         <div class="d-flex justify-content-end gap-2">
                             <button type="reset" class="btn btn-outline-secondary">Clear Form</button>

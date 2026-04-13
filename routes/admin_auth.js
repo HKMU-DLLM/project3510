@@ -1,4 +1,5 @@
 const express = require("express");
+const Database = require('better-sqlite3');
 const db = new Database('./database/database');
 const router = express.Router();
 const isAdmin = (req, res, next) => {

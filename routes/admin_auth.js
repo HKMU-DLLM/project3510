@@ -6,7 +6,6 @@ const isAdmin = (req, res, next) => {
     if (req.session && req.session.isLoggedIn) {
         return next();
     } else {
-        // 3. If no, kick them back to the login page
         return res.redirect('/admin');
     }
 };
@@ -28,8 +27,7 @@ router.post("/login", (req, res) => {
         req.session.name = "admin";
         return res.redirect("/admin/form");
     }else {
-        // Always send a response so the browser doesn't time out!
-        return res.status(401).send("Invalid Username or Password. <a href='/admin/login'>Try again</a>");
+        return res.status(401).send("Invalid Username or Password. <a href='/admin'>Try again</a>");
     }
 	
 });
@@ -45,7 +43,6 @@ router.post("/concerts/create", isAdmin, (req, res) => {
         return res.status(500).send("An error occurred while creating the concert. <a href='/admin/form'>Try again</a>");
     }
 
-    // For now, just send a success response
     return res.send("Concert created successfully! <a href='/admin/form'>Create another</a>");
 });
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>TakeIt - Buy Ticket</title>
+        <link rel="stylesheet" type="text/css" href="/main-style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+DK+Uloopet:wght@100..400&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="nav-bar playwrite-dk-uloopet">
+            <ul>
+                <li><a href="#Home"><%= __("home") %></a></li>
+                <li><a href="#Concert"><%= __("concert") %></a></li>
+                <li><a href="#Cart"><%= __("cart") %></a></li>
+                <li><a href="#Orderhistory"><%= __("order_history") %></a></li>
+                <li><a href="#profile"><%= __("profile") %></a></li>
+            </ul>
+        </div>
+
+        <div class="buy-ticket-container playfair-display">
+            <form action="/customer/order" method="POST">
+                
+            
+            </form>
+        </div>
+    </body>
+</html>

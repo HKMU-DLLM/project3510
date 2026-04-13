@@ -1,5 +1,7 @@
 const express = require("express");
 const session = require("express-session");
+const Database = require('better-sqlite3');
+const db = require("./database/database.js");
 const bodyParser = require("body-parser");
 const path = require("path");
 const http = require("http");
@@ -9,6 +11,8 @@ const server = http.createServer(app);
 
 const adminRouter = require("./routes/admin_auth");
 const concertRouter = require("./routes/concert");
+const customerRouter = require("./routes/customer");
+
 i18n.configure({
   locales: ["en", "zh"],
   directory: path.join(__dirname, "locales"),
@@ -38,8 +42,11 @@ app.get("/", (req, res) => {
     welcome: res.__("welcome")
   });
 });
+
 app.use("/admin", adminRouter);
 app.use("/concert", concertRouter);
+app.use("/customer", customerRouter);
+
 const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

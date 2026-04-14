@@ -22,6 +22,8 @@
                     <td><%= concert.title %></td>
                     <td><%= concert.location %></td>
                     <td><%= concert.date %></td>
+                    <td><a href="/admin/sales_report/<%= concert.id %>">Summary</a></td>
+                    <td><a href="/admin/edit/<%= concert.id %>">Edit</a></td>
                 </tr>
             <% }); %>
         </tbody>

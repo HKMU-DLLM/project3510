@@ -3,15 +3,15 @@ const path = require('path');
 
 const dbPath = path.join(__dirname, 'database.db');
 const db = new Database(dbPath);
-
+db.pragma('foreign_keys = ON');
 db.exec(`
-CREATE TABLE Customer IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS Customer  (
     user_id         INTEGER     PRIMARY KEY AUTOINCREMENT,
     name            TEXT        NOT NULL,
     email           TEXT        NOT NULL,
     password        TEXT        NOT NULL
 );
-CREATE TABLE Concerts IF NOT EXISTS(
+CREATE TABLE IF NOT EXISTS Concerts (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     title TEXT, 
     ZoneA_Ticket INTEGER DEFAULT (150), 
@@ -22,7 +22,7 @@ CREATE TABLE Concerts IF NOT EXISTS(
     date TEXT
 );  
 
-CREATE TABLE Orders IF NOT EXISTS(
+CREATE TABLE IF NOT EXISTS Orders (
     order_id        INTEGER     PRIMARY KEY AUTOINCREMENT,
     user_id         INTEGER     NOT NULL,
     name            TEXT        NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE Orders IF NOT EXISTS(
     FOREIGN KEY (user_id) REFERENCES Customer(user_id)
 );
 
-CREATE TABLE Order_tickets IF NOT EXISTS(
+CREATE TABLE IF NOT EXISTS Order_tickets (
     ticket_id       INTEGER     PRIMARY KEY AUTOINCREMENT,
     concert_id      INTEGER     NOT NULL,
     order_id        INTEGER     NOT NULL,

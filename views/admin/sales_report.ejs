@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report - <%= concert.concert_title %></title>
+</head>
+<body>
+
+    <h1>Concert Sales Report</h1>
+
+    <section>
+        <h2>General Information</h2>
+        <ul>
+            <li><strong>Concert ID:</strong> <%= concert.concert_id %></li>
+            <li><strong>Title:</strong> <%= concert.concert_title %></li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Sales Overview</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Total Unique Customers</td>
+                    <td><%= concert.total_customers %></td>
+                </tr>
+                <tr>
+                    <td>Total Tickets Sold</td>
+                    <td><%= concert.total_tickets_sold %></td>
+                </tr>
+                <tr>
+                    <td><strong>Total Revenue</strong></td>
+                    <td><strong>$<%= concert.total_revenue.toLocaleString() %></strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Zone Breakdown</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Zone</th>
+                    <th>Capacity</th>
+                    <th>Tickets Sold</th>
+                    <th>Remaining</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Zone A</td>
+                    <td><%= concert.ZoneA_Ticket %></td>
+                    <td><%= concert.zone_a_sold %></td>
+                    <td><%= concert.ZoneA_Ticket - concert.zone_a_sold %></td>
+                    <td>$<%= concert.zone_a_revenue.toLocaleString() %></td>
+                </tr>
+                <tr>
+                    <td>Zone B</td>
+                    <td><%= concert.ZoneB_Ticket %></td>
+                    <td><%= concert.zone_b_sold %></td>
+                    <td><%= concert.ZoneB_Ticket - concert.zone_b_sold %></td>
+                    <td>$<%= concert.zone_b_revenue.toLocaleString() %></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <p>
+        <a href="/admin/dashboard">Back to Dashboard</a>
+    </p>
+
+</body>
+</html>

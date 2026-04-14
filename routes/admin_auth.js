@@ -55,4 +55,74 @@ router.post("/concerts/create", isAdmin, (req, res) => {
     return res.redirect('/admin/profile');
 });
 
+router.get("/sales_report/:concertId", isAdmin, (req, res) => {
+    const concertId = req.params.concertId;
+    try {
+        const sql_query = `
+            SELECT 
+                c.id AS concert_id,
+                c.title AS concert_title,
+                c.ZoneA_Ticket,
+                c.ZoneB_Ticket,
+                COUNT(DISTINCT ot.user_id) AS total_customers, 
+                -- 使用 IFNULL 確保即使沒人買票也回傳 0 而不是 null
+                IFNULL(SUM(ot.quantity), 0) AS total_tickets_sold,         
+                
+                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneA' THEN ot.quantity ELSE 0 END), 0) AS zone_a_sold,
+                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneA' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END), 0) AS zone_a_revenue,
+
+                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneB' THEN ot.quantity ELSE 0 END), 0) AS zone_b_sold,
+                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneB' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END), 0) AS zone_b_revenue,
+
+                -- 總收入計算
+                IFNULL(
+                    (SUM(CASE WHEN ot.chosen_zone = 'ZoneA' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END) +
+                     SUM(CASE WHEN ot.chosen_zone = 'ZoneB' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END)), 
+                0) AS total_revenue
+    
+            FROM Concerts c
+            LEFT JOIN Order_tickets ot ON c.id = ot.concert_id
+            WHERE c.id = ?
+            GROUP BY c.id;
+        `;
+        const concert = db.prepare(sql_query).get(concertId);
+        if (!concert) {
+            return res.status(404).send("Concert not found");
+        }
+        
+        res.render("admin/sales_report", { concert });
+    } catch (error) {
+        console.error("Error fetching sales report:", error);
+        return res.status(500).send("An error occurred while fetching the sales report.");
+    }
+});
+
+router.get("/edit/:concertId", isAdmin, (req, res) => {
+    const concertId = req.params.concertId;
+    try {
+        const concert = db.prepare("SELECT * FROM Concerts WHERE id = ?").get(concertId);
+        if (!concert) {
+            return res.status(404).send("Concert not found");
+        }
+        res.render("admin/edit_concert", { concert });
+    }
+    catch (error) {
+        console.error("Error fetching concert for edit:", error);
+        return res.status(500).send("An error occurred while fetching the concert details.");
+    }
+});
+
+router.post("/edit/:concertId", isAdmin, (req, res) => {
+    const concertId = req.params.concertId;
+    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date } = req.body;
+    try {
+        const stmt = db.prepare('UPDATE Concerts SET title = ?, ZoneA_Ticket = ?, ZoneA_Price = ?, ZoneB_Ticket = ?, ZoneB_Price = ?, location = ?, date = ? WHERE id = ?');
+        stmt.run(title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, concertId);
+        return res.redirect('/admin/profile');
+    } catch (error) {
+        console.error("Error updating concert:", error);
+        return res.status(500).send("An error occurred while updating the concert. <a href='/admin/profile'>Try again</a>");
+    }
+});
+
 module.exports = router;

@@ -18,11 +18,22 @@
             </ul>
         </div>
 
-        <div class="buy-ticket-container playfair-display">
-            <form action="/customer/order" method="POST">
-                
-            
-            </form>
+        <div class="concerts playfair-display">
+            <div class="row g-4">
+				<% concerts.forEach(c => { %>
+				<div class="col-md-4">
+					<div class="card h-100" id="concert-card">
+						<div class="card-body">
+							<h4 class="card-title"><%= c.title %></h5>
+							<p class="card-text text-muted"><%= c.date ><%= c.location %></p>
+							<a href="/customer/buy_ticket/<%= c.id %>" class="btn btn-primary w-100" id="view-button"
+								>View Menu</a
+							>
+						</div>
+					</div>
+				</div>
+				<% }) %>
+			</div>
         </div>
     </body>
 </html>

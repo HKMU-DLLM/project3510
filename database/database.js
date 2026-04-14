@@ -21,7 +21,9 @@ CREATE TABLE IF NOT EXISTS Concerts (
     ZoneB_Price INTEGER, 
     location TEXT, 
     date TEXT,
-    ready_to_launch INTEGER
+    ready_to_launch INTEGER MOT NULL,
+    organizer TEXT,
+    time TEXT
 );  
 
 CREATE TABLE IF NOT EXISTS Orders (

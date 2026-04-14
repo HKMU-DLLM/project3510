@@ -24,15 +24,25 @@ router.get("/profile", isAdmin, (req, res) => {
 });
 
 router.post("/concerts/create", isAdmin, (req, res) => {
-    const { title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, is_published } = req.body;
+    const { title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, is_published } = req.body;
+
+    let ready_to_launch = 0;
+    if (req.body.is_published) {
+        if (Array.isArray(is_published)) {
+            ready_to_launch = req.body.is_published.includes("1") ? 1 : 0;
+        } else {
+            ready_to_launch = parseInt(req.body.is_published) === 1 ? 1 : 0;        
+        }
+    }
+
     try {
         const stmt = db.prepare('INSERT INTO Concerts (title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, ready_to_launch) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        stmt.run(title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, is_published);
+        stmt.run(title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, ready_to_launch);
     } catch (error) {
         console.error("Error inserting concert:", error);
         return res.status(500).send("An error occurred while creating the concert. <a href='/admin/form'>Try again</a>");
     }
-
+    console.log("Saving to DB:", { title, ready_to_launch });
     return res.redirect('/admin/profile');
 });
 
@@ -95,10 +105,20 @@ router.get("/edit/:concertId", isAdmin, (req, res) => {
 
 router.post("/edit/:concertId", isAdmin, (req, res) => {
     const concertId = req.params.concertId;
-    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, ready_to_launch } = req.body;
+    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, is_published, organizer, time} = req.body;
+
+    let ready_to_launch = 0;
+    if (req.body.is_published) {
+        if (Array.isArray(is_published)) {
+            ready_to_launch = req.body.is_published.includes("1") ? 1 : 0;
+        } else {
+            ready_to_launch = parseInt(req.body.is_published) === 1 ? 1 : 0;        
+        }
+    }
+
     try {
-        const stmt = db.prepare('UPDATE Concerts SET title = ?, ZoneA_Ticket = ?, ZoneA_Price = ?, ZoneB_Ticket = ?, ZoneB_Price = ?, location = ?, date = ?, ready_to_launch = ? WHERE id = ?');
-        stmt.run(title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, ready_to_launch, concertId);
+        const stmt = db.prepare('UPDATE Concerts SET title = ?, ZoneA_Ticket = ?, ZoneA_Price = ?, ZoneB_Ticket = ?, ZoneB_Price = ?, location = ?, date = ?, ready_to_launch = ?, organizer = ?, time = ? WHERE id = ?');
+        stmt.run(title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, ready_to_launch, organizer, time, concertId);
         return res.redirect('/admin/profile');
     } catch (error) {
         console.error("Error updating concert:", error);

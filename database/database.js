@@ -5,23 +5,33 @@ const dbPath = path.join(__dirname, 'database.db');
 const db = new Database(dbPath);
 
 db.exec(`
-CREATE TABLE Customer (
+CREATE TABLE Customer IF NOT EXISTS (
     user_id         INTEGER     PRIMARY KEY AUTOINCREMENT,
     name            TEXT        NOT NULL,
     email           TEXT        NOT NULL,
     password        TEXT        NOT NULL
-)
+);
+CREATE TABLE Concerts IF NOT EXISTS(
+    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    title TEXT, 
+    ZoneA_Ticket INTEGER DEFAULT (150), 
+    ZoneA_Price INTEGER, 
+    ZoneB_Ticket INTEGER DEFAULT (150),
+    ZoneB_Price INTEGER, 
+    location TEXT, 
+    date TEXT
+);  
 
-CREATE TABLE Orders (
+CREATE TABLE Orders IF NOT EXISTS(
     order_id        INTEGER     PRIMARY KEY AUTOINCREMENT,
     user_id         INTEGER     NOT NULL,
     name            TEXT        NOT NULL,
     buying_time     DATETIME    DEFAULT CURRENT_TIMESTAMP,
-    total_paid      REAL
-    FOREIGN KEY (user_id) REFERENCES Customer(user_id),
+    total_paid      REAL,
+    FOREIGN KEY (user_id) REFERENCES Customer(user_id)
 );
 
-CREATE TABLE Order_tickets (
+CREATE TABLE Order_tickets IF NOT EXISTS(
     ticket_id       INTEGER     PRIMARY KEY AUTOINCREMENT,
     concert_id      INTEGER     NOT NULL,
     order_id        INTEGER     NOT NULL,

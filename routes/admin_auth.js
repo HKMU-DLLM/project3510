@@ -2,16 +2,12 @@ const express = require("express");
 const router = express.Router();
 const db = require("../database/database.js");
 const isAdmin = (req, res, next) => {
-    if (req.session && req.session.isLoggedIn) {
+    if (req.session && req.session.isLoggedIn && req.session.user.role === 'admin') {
         return next();
     } else {
         return res.redirect('/admin');
     }
 };
-
-router.get("/", (req, res) => {
-    res.render("admin/admin_login");
-});
 
 router.get("/form", isAdmin, (req, res) => {
     res.render("admin/admin_form");
@@ -25,21 +21,6 @@ router.get("/profile", isAdmin, (req, res) => {
         console.error(err);
         res.status(500).send("Database Error");
     }
-});
-
-router.post("/login", (req, res) => {
-	console.log("Login attempt:", req.body);
-
-	let username = req.body.username;
-    let password = req.body.password;
-    if (username === "admin" && password === "admin123") {
-        req.session.isLoggedIn = true;
-        req.session.name = "admin";
-        return res.redirect("/admin/profile");
-    }else {
-        return res.status(401).send("Invalid Username or Password. <a href='/admin'>Try again</a>");
-   }
-	
 });
 
 router.post("/concerts/create", isAdmin, (req, res) => {

@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS Customer  (
     user_id         INTEGER     PRIMARY KEY AUTOINCREMENT,
     name            TEXT        NOT NULL,
     email           TEXT        NOT NULL,
-    password        TEXT        NOT NULL
+    password        TEXT        NOT NULL,
+    role            TEXT        NOT NULL DEFAULT 'customer'
 );
 CREATE TABLE IF NOT EXISTS Concerts (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 

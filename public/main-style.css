@@ -24,6 +24,26 @@ body {
   margin-bottom: 20px;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;  
+    border: 1px solid #333;  
+    min-width: 140px;
+    z-index: 999;
+}
+
 ul{
   display: flex;
   list-style-type: none;

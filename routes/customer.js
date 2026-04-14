@@ -17,7 +17,6 @@ router.get("/register", (req, res) => {
     res.render("customer/customer_register");
 });
 
-// 处理注册（纯原生，无任何依赖）
 router.post('/register', (req, res) => {
     const { name, email, password } = req.body;
 
@@ -38,7 +37,6 @@ router.post('/register', (req, res) => {
     }
 });
 
-// 处理登录（纯原生）
 router.post("/login", (req, res) => {
     const { username, password } = req.body;
 

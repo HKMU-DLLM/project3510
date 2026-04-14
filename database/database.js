@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS Concerts (
     ZoneB_Ticket INTEGER DEFAULT (150),
     ZoneB_Price INTEGER, 
     location TEXT, 
-    date TEXT
+    date TEXT,
+    ready_to_launch INTEGER
 );  
 
 CREATE TABLE IF NOT EXISTS Orders (

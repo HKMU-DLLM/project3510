@@ -43,10 +43,10 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/concerts/create", isAdmin, (req, res) => {
-    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date } = req.body;
+    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, is_published } = req.body;
     try {
-        const stmt = db.prepare('INSERT INTO Concerts (title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        stmt.run(title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date);
+        const stmt = db.prepare('INSERT INTO Concerts (title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, ready_to_launch) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        stmt.run(title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, is_published);
     } catch (error) {
         console.error("Error inserting concert:", error);
         return res.status(500).send("An error occurred while creating the concert. <a href='/admin/form'>Try again</a>");
@@ -104,7 +104,7 @@ router.get("/edit/:concertId", isAdmin, (req, res) => {
         if (!concert) {
             return res.status(404).send("Concert not found");
         }
-        res.render("admin/edit_concert", { concert });
+        res.render("admin/admin_form", { concert });
     }
     catch (error) {
         console.error("Error fetching concert for edit:", error);
@@ -114,10 +114,10 @@ router.get("/edit/:concertId", isAdmin, (req, res) => {
 
 router.post("/edit/:concertId", isAdmin, (req, res) => {
     const concertId = req.params.concertId;
-    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date } = req.body;
+    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, ready_to_launch } = req.body;
     try {
-        const stmt = db.prepare('UPDATE Concerts SET title = ?, ZoneA_Ticket = ?, ZoneA_Price = ?, ZoneB_Ticket = ?, ZoneB_Price = ?, location = ?, date = ? WHERE id = ?');
-        stmt.run(title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, concertId);
+        const stmt = db.prepare('UPDATE Concerts SET title = ?, ZoneA_Ticket = ?, ZoneA_Price = ?, ZoneB_Ticket = ?, ZoneB_Price = ?, location = ?, date = ?, ready_to_launch = ? WHERE id = ?');
+        stmt.run(title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, ready_to_launch, concertId);
         return res.redirect('/admin/profile');
     } catch (error) {
         console.error("Error updating concert:", error);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Concert</title>
+    <title><%= typeof concert !== 'undefined' ? 'Edit Concert' : 'Add New Concert' %></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -12,36 +12,52 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Create New Concert Event</h4>
+                <div class="card-header <%= typeof concert !== 'undefined' ? 'bg-warning' : 'bg-primary' %> text-white">
+                    <h4 class="mb-0"><%= typeof concert !== 'undefined' ? 'Edit' : 'Create New' %> Concert Event</h4>
                 </div>
                 <div class="card-body">
-                    <form action="/admin/concerts/create" method="POST">
+                    <% 
+                        // 判斷 URL 與 Method
+                        let actionUrl = "/admin/concerts/create"; 
+                        if (typeof concert !== 'undefined') {
+                            actionUrl = "/admin/edit/" + concert.id; 
+                        }
+                    %>
+                    <form action="<%= actionUrl %>" method="POST">
                         
                         <div class="mb-4">
                             <label for="title" class="form-label fw-bold">Concert Title</label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="e.g. Summer Rock Night" required>
+                            <input type="text" class="form-control" id="title" name="title" 
+                                   placeholder="e.g. Summer Rock Night"
+                                   value="<%= typeof concert !== 'undefined' ? concert.title : '' %>" required>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="ZoneA_Ticket" class="form-label fw-bold">Zone A Capacity</label>
-                                <input type="number" class="form-control" id="ZoneA_Ticket" name="ZoneA_Ticket" value="150" min="0">
+                                <input type="number" class="form-control" id="ZoneA_Ticket" name="ZoneA_Ticket" 
+                                       value="<%= typeof concert !== 'undefined' ? concert.ZoneA_Ticket : '150' %>" min="0">
                             </div>
+               
                             <div class="col-md-6">
                                 <label for="ZoneA_Price" class="form-label fw-bold">Zone A Price ($)</label>
-                                <input type="number" step="0.01" class="form-control" id="ZoneA_Price" name="ZoneA_Price" placeholder="e.g. 880" required>
+                                <input type="number" step="0.01" class="form-control" id="ZoneA_Price" name="ZoneA_Price" 
+                                       placeholder="e.g. 880"
+                                       value="<%= typeof concert !== 'undefined' ? concert.ZoneA_Price : '' %>" required>
                             </div>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <label for="ZoneB_Ticket" class="form-label fw-bold">Zone B Capacity</label>
-                                <input type="number" class="form-control" id="ZoneB_Ticket" name="ZoneB_Ticket" value="150" min="0">
+                                <input type="number" class="form-control" id="ZoneB_Ticket" name="ZoneB_Ticket" 
+                                       value="<%= typeof concert !== 'undefined' ? concert.ZoneB_Ticket : '150' %>" min="0">
                             </div>
                             <div class="col-md-6">
                                 <label for="ZoneB_Price" class="form-label fw-bold">Zone B Price ($)</label>
-                                <input type="number" step="0.01" class="form-control" id="ZoneB_Price" name="ZoneB_Price" placeholder="e.g. 480" required>
+                                <input type="number" step="0.01" class="form-control" id="ZoneB_Price" name="ZoneB_Price" 
+                                       placeholder="e.g. 480"
+                                       value="<%= typeof concert !== 'undefined' ? concert.ZoneB_Price : '' %>" required>
                             </div>
                         </div>
 
@@ -50,18 +66,32 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="location" class="form-label fw-bold">Location / Venue</label>
-                                <input type="text" class="form-control" id="location" name="location" placeholder="e.g. Madison Square Garden" required>
+                                <input type="text" class="form-control" id="location" name="location" 
+                                       placeholder="e.g. Madison Square Garden"
+                                       value="<%= typeof concert !== 'undefined' ? concert.location : '' %>" required>
                             </div>
 
                             <div class="col-md-6 mb-4">
                                 <label for="date" class="form-label fw-bold">Event Date</label>
-                                <input type="date" class="form-control" id="date" name="date" required>
+                                <input type="date" class="form-control" id="date" name="date" 
+                                       value="<%= typeof concert !== 'undefined' ? concert.date : '' %>" required>
                             </div>
                         </div>
 
+                        <div class="mb-4 form-check ms-1">
+                            <input type="hidden" name="is_published" value="0"> 
+                            <input type="checkbox" class="form-check-input" id="is_published" name="is_published" value="1" 
+                                   <%= (typeof concert !== 'undefined' && concert.is_published == 1) || typeof concert === 'undefined' ? 'checked' : '' %>>
+                            <label class="form-check-label fw-bold" for="is_published">
+                                Launch immediately
+                            </label>
+                        </div>
+
                         <div class="d-flex justify-content-end gap-2">
-                            <button type="reset" class="btn btn-outline-secondary">Clear Form</button>
-                            <button type="submit" class="btn btn-success px-4">Save Concert</button>
+                            <a href="/admin/concerts" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-success px-4">
+                                <%= typeof concert !== 'undefined' ? 'Update Concert' : 'Save Concert' %> 
+                            </button>
                         </div>
 
                     </form>

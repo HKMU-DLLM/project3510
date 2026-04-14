@@ -20,8 +20,11 @@
             <% concerts.forEach(concert => { %>
                 <tr>
                     <td><%= concert.title %></td>
+                    <td><%= concert.organizer %></td>
                     <td><%= concert.location %></td>
                     <td><%= concert.date %></td>
+                    <td><%= concert.time %></td>
+                    <td><%= concert.is_published %></td>
                     <td><a href="/admin/sales_report/<%= concert.id %>">Summary</a></td>
                     <td><a href="/admin/edit/<%= concert.id %>">Edit</a></td>
                 </tr>

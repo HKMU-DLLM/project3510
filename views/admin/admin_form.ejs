@@ -25,25 +25,31 @@
                     %>
                     <form action="<%= actionUrl %>" method="POST">
                         
-                        <div class="mb-4">
-                            <label for="title" class="form-label fw-bold">Concert Title</label>
-                            <input type="text" class="form-control" id="title" name="title" 
-                                   placeholder="e.g. Summer Rock Night"
-                                   value="<%= typeof concert !== 'undefined' ? concert.title : '' %>" required>
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label for="title" class="form-label fw-bold">Concert Title</label>
+                                <input type="text" class="form-control" id="title" name="title" 
+                                    placeholder="e.g. Summer Rock Night"
+                                    value="<%= typeof concert !== 'undefined' ? concert.title : '' %>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="organizer" class="form-label fw-bold">Organizer</label>
+                                <input type="text" class="form-control" id="organizer" name="organizer" 
+                                    placeholder="e.g. Live Nation"
+                                    value="<%= typeof concert !== 'undefined' ? concert.organizer : '' %>" required>
+                            </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="ZoneA_Ticket" class="form-label fw-bold">Zone A Capacity</label>
                                 <input type="number" class="form-control" id="ZoneA_Ticket" name="ZoneA_Ticket" 
-                                       value="<%= typeof concert !== 'undefined' ? concert.ZoneA_Ticket : '150' %>" min="0">
+                                    value="<%= typeof concert !== 'undefined' ? concert.ZoneA_Ticket : '150' %>" min="0">
                             </div>
-               
                             <div class="col-md-6">
                                 <label for="ZoneA_Price" class="form-label fw-bold">Zone A Price ($)</label>
                                 <input type="number" step="0.01" class="form-control" id="ZoneA_Price" name="ZoneA_Price" 
-                                       placeholder="e.g. 880"
-                                       value="<%= typeof concert !== 'undefined' ? concert.ZoneA_Price : '' %>" required>
+                                    value="<%= typeof concert !== 'undefined' ? concert.ZoneA_Price : '' %>" required>
                             </div>
                         </div>
 
@@ -51,13 +57,12 @@
                             <div class="col-md-6">
                                 <label for="ZoneB_Ticket" class="form-label fw-bold">Zone B Capacity</label>
                                 <input type="number" class="form-control" id="ZoneB_Ticket" name="ZoneB_Ticket" 
-                                       value="<%= typeof concert !== 'undefined' ? concert.ZoneB_Ticket : '150' %>" min="0">
+                                    value="<%= typeof concert !== 'undefined' ? concert.ZoneB_Ticket : '150' %>" min="0">
                             </div>
                             <div class="col-md-6">
                                 <label for="ZoneB_Price" class="form-label fw-bold">Zone B Price ($)</label>
                                 <input type="number" step="0.01" class="form-control" id="ZoneB_Price" name="ZoneB_Price" 
-                                       placeholder="e.g. 480"
-                                       value="<%= typeof concert !== 'undefined' ? concert.ZoneB_Price : '' %>" required>
+                                    value="<%= typeof concert !== 'undefined' ? concert.ZoneB_Price : '' %>" required>
                             </div>
                         </div>
 
@@ -67,33 +72,35 @@
                             <div class="col-md-6 mb-3">
                                 <label for="location" class="form-label fw-bold">Location / Venue</label>
                                 <input type="text" class="form-control" id="location" name="location" 
-                                       placeholder="e.g. Madison Square Garden"
-                                       value="<%= typeof concert !== 'undefined' ? concert.location : '' %>" required>
+                                    value="<%= typeof concert !== 'undefined' ? concert.location : '' %>" required>
                             </div>
 
-                            <div class="col-md-6 mb-4">
+                            <div class="col-md-3 mb-4">
                                 <label for="date" class="form-label fw-bold">Event Date</label>
                                 <input type="date" class="form-control" id="date" name="date" 
-                                       value="<%= typeof concert !== 'undefined' ? concert.date : '' %>" required>
+                                    value="<%= typeof concert !== 'undefined' ? concert.date : '' %>" required>
+                            </div>
+
+                            <div class="col-md-3 mb-4">
+                                <label for="time" class="form-label fw-bold">Start Time</label>
+                                <input type="time" class="form-control" id="time" name="time" 
+                                    value="<%= typeof concert !== 'undefined' ? concert.time : '' %>" required>
                             </div>
                         </div>
 
                         <div class="mb-4 form-check ms-1">
                             <input type="hidden" name="is_published" value="0"> 
                             <input type="checkbox" class="form-check-input" id="is_published" name="is_published" value="1" 
-                                   <%= (typeof concert !== 'undefined' && concert.is_published == 1) || typeof concert === 'undefined' ? 'checked' : '' %>>
-                            <label class="form-check-label fw-bold" for="is_published">
-                                Launch immediately
-                            </label>
+                                <%= (typeof concert !== 'undefined' && concert.is_published == 1) || typeof concert === 'undefined' ? 'checked' : '' %>>
+                            <label class="form-check-label fw-bold" for="is_published">Launch immediately</label>
                         </div>
 
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="/admin/concerts" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="/admin/profile" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-success px-4">
                                 <%= typeof concert !== 'undefined' ? 'Update Concert' : 'Save Concert' %> 
                             </button>
                         </div>
-
                     </form>
                 </div>
             </div>

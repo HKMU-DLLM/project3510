@@ -43,10 +43,10 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/concerts/create", isAdmin, (req, res) => {
-    const { title, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, is_published } = req.body;
+    const { title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, is_published } = req.body;
     try {
-        const stmt = db.prepare('INSERT INTO Concerts (title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, ready_to_launch) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        stmt.run(title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, is_published);
+        const stmt = db.prepare('INSERT INTO Concerts (title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, ready_to_launch) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        stmt.run(title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, is_published);
     } catch (error) {
         console.error("Error inserting concert:", error);
         return res.status(500).send("An error occurred while creating the concert. <a href='/admin/form'>Try again</a>");

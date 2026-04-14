@@ -21,10 +21,25 @@ router.post('/register', (req, res) => {
     const { name, email, password } = req.body;
 
     try {
+        //check
         if (!name || !email || !password) {
             return res.redirect('/customer/register');
         }
+        
+        const existingName = db.prepare(`
+            SELECT * FROM Customer WHERE name = ?
+        `).get(name);
+        if (existingName) {
+            return res.redirect('/customer/register?error=Username is already in use.');
+        }
 
+        const existingEmail = db.prepare(`
+            SELECT * FROM Customer WHERE email = ?
+        `).get(email);
+        if (existingEmail) {
+            return res.redirect('/customer/register?error=Email is already in use.');
+        }
+        
         db.prepare(`
             INSERT INTO Customer (name, email, password, role)
             VALUES (?, ?, ?, 'customer')

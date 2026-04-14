@@ -9,10 +9,19 @@
 		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+DK+Uloopet:wght@100..400&display=swap" rel="stylesheet">
 	</head>
     <body>
-		<div class="nav-bar playwrite-dk-uloopet">
-			<div style="text-align:right; padding:10px;">
-  			<a href="?lang=en">English</a> |
-  			<a href="?lang=zh">中文</a>
+
+		<div class="nav-bar playwrite-dk-uloopet" style="display: flex; justify-content: space-between; align-items: center;">
+			<div class="dropdown">
+				<span>Login in</span>
+				<div class="dropdown-menu">
+					<a href="/customer">Login in</a>
+					<a href="/customer/register">Register</a>
+				</div>
+			</div>
+			<div style="padding:10px;">
+				<a href="?lang=en">English</a> |
+				<a href="?lang=zh">中文</a>
+			</div>
 		</div>
 		<ul>
 			<li><a href="#Home"><%= __("home") %></a></li>

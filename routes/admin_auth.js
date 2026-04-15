@@ -5,7 +5,7 @@ const isAdmin = (req, res, next) => {
     if (req.session && req.session.isLoggedIn && req.session.user.role === 'admin') {
         return next();
     } else {
-        return res.redirect('/admin');
+        return res.redirect('/customer');
     }
 };
 

@@ -5,8 +5,8 @@ const db = require("../database/database.js");
 
 router.get("/", (req, res) => {
     try {
-        const concerts = db.prepare("SELECT * FROM Concerts").all();
-        res.render("concerts", { concerts }); 
+        const concert = db.prepare("SELECT * FROM Concerts").all();
+        res.render("concert", { concert }); 
     } catch (err) {
         res.status(500).send("Database error");
     }

@@ -11,24 +11,26 @@
     <body>
         <div class="nav-bar playwrite-dk-uloopet">
             <ul>
-                <li><a href="#Home"><%= __("home") %></a></li>
-			    <li><a href="/concert/concert"><%= __("concert") %></a></li>
+                <li><a href="/"><%= __("home") %></a></li>
+			    <li><a href="/concert"><%= __("concert") %></a></li>
                 <li><a href="#Orderhistory"><%= __("order_history") %></a></li>
                 <li><a href="#profile"><%= __("profile") %></a></li>
             </ul>
         </div>
 
-        <div class="concerts playfair-display">
+        <div class="concert playfair-display">
             <div class="row g-4">
-				<% concerts.forEach(c => { %>
+				<% concert.forEach(c => { %>
 				<div class="col-md-4">
 					<div class="card h-100" id="concert-card">
 						<div class="card-body">
 							<h4 class="card-title"><%= c.title %></h5>
-							<p class="card-text text-muted"><%= c.date ><%= c.location %></p>
-							<a href="/customer/buy_ticket/<%= c.id %>" class="btn btn-primary w-100" id="view-button"
-								>View Menu</a
-							>
+							<p class="card-text text-muted">
+                                <%= c.date %><%= c.location %>
+                            </p>
+							<a href="/customer/buy_ticket/<%= c.id %>" class="btn btn-primary w-100" id="view-button">
+                                TakeIt
+                            </a>
 						</div>
 					</div>
 				</div>

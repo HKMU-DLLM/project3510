@@ -5,6 +5,7 @@ const isCustomer = (req, res, next) => {
     if (req.session && req.session.isLoggedIn && req.session.user.role === 'customer') {
         return next();
     } else {
+        req.session.returnTo = req.originalUrl;
         return res.redirect('/customer');
     }
 };
@@ -74,7 +75,11 @@ router.post("/login", (req, res) => {
 
         req.session.isLoggedIn = true;
         req.session.user = user;
-        return res.redirect('/customer/buy_ticket');
+
+        const redirectTo = req.session.returnTo || '/concert';
+                delete req.session.returnTo;
+
+        return res.redirect(redirectTo);
 
     } catch (err) {
         res.redirect('/customer');
@@ -82,8 +87,19 @@ router.post("/login", (req, res) => {
 });
 
 
-router.get("/buy_ticket", (req, res) => {
-    res.render("customer/buy_ticket");
+router.get("/buy_ticket/:id", isCustomer, (req, res) => {
+const id = req.params.id;
+
+	try {
+		const stmt = db.prepare("SELECT * FROM Concerts WHERE id = ?");
+		const ticket = stmt.get(id);
+		console.log(ticket);
+
+		res.render("customer/buy_ticket", { ticket, id });
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Database error");
+	}
 });
 
 module.exports = router;

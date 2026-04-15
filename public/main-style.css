@@ -18,10 +18,15 @@ body {
   justify-content: center;
 }
 
-/* navigation bar*/
+/* navigation bar */
 .nav-bar{
   width: 100%;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
 }
 
 .dropdown {
@@ -29,12 +34,19 @@ body {
     display: inline-block;
 }
 
+.dropdown a {
+    text-decoration: none;
+}
+
+.dropdown a:hover {
+    text-decoration: underline;
+}
+
 .dropdown:hover .dropdown-menu {
-    display: block;
+ display: block;
 }
 
 .dropdown-menu {
-    display: none;
     position: absolute;
     top: 100%;
     left: 0;
@@ -81,18 +93,60 @@ ul li a:hover::after {
   width: 60%;
 }
 
+/* language links */
+.lang-links a {
+  text-decoration: none;
+}
+
+.lang-links a:hover {
+  text-decoration: underline;
+}
+
 /* auto sliding banner */
 .banner-container{
   width: min(70%);
   margin: 0 auto;
   overflow: hidden;
   margin-bottom: 20px;
+  position: relative;
+}
+
+.banner-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  z-index: 10;
+  transform: translateY(-50%);
+}
+
+.banner-scroll-btn {
+  background-color: rgba(33, 94, 97, 0.7);
+  color: #F5FBE6;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: none;
+}
+
+.banner-scroll-btn:hover {
+  background-color: rgba(33, 94, 97, 0.9);
 }
 
 .banner-track{
   display: flex;
   width: 400%;
-  animation: slide 30s infinite;
+  transition: transform 0.5s ease;
+
+  transform: translateX(0);
 }
 
 .banner{
@@ -136,7 +190,21 @@ img{
   position: absolute;
   right: 0px;
   bottom: 0px;
+  display: inline-block;
+  background-color: #215E61;
+  color: #F5FBE6;
+  font-family: "playfair-display", serif;
+  font-size: 25px;
+  padding: 15px 30px;
+  border: none;
+  box-shadow: 10px 10px #fada85;
+  text-decoration: none;
 }
+
+.ticket-btn:hover {
+  background-color: #1a4f53;
+}
+
 button{
   background-color: #215E61;
   color: #F5FBE6;
@@ -146,6 +214,10 @@ button{
   width: 230px;
   border: none;
   box-shadow: 10px 10px #fada85;
+}
+
+button:hover {
+  background-color: #1a4f53;
 }
 
 @keyframes slide{
@@ -164,28 +236,45 @@ button{
   100% { transform: translateX(0%); }
 }
 
-/* extending pannel */
-.panel-container{
-  width:70%;
-  margin: 0 auto; 
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+.list-group.list-group-flush {
+  background-color: #F5FBE6;
+  overflow: hidden;
 }
 
-.panel{
-  height: 300px;
-  width: 100%;
-  flex: 1;
-  border:3px solid #233D4D;
-  border-right:none;
-  position: relative;
+.list-group.list-group-flush .list-group-item {
+  background-color: transparent;
+  color: #233D4D;
+  border: none;
+  padding: 1.25rem 1rem;
+  min-height: 150px;
+  border-bottom: 1px solid rgba(35, 61, 77, 0.3);
 }
 
-#panel-7{
-  border-right:3px solid #233D4D;
+.list-group.list-group-flush .list-group-item:last-child {
+  border-bottom: none;
+}
+
+.list-group.list-group-flush .list-group-item:last-child {
+  border: none;
+}
+
+.list-group.list-group-flush .list-group-item .mb-1,
+.list-group.list-group-flush .list-group-item small {
+  color: #233D4D;
+}
+
+.list-group.list-group-flush .list-group-item p {
+  color: rgba(35, 61, 77, 0.65);
+}
+
+.list-group.list-group-flush .list-group-item.active {
+  background-color: rgba(35, 61, 77, 0.06);
+  border: none;
+}
+
+.list-group.list-group-flush .list-group-item-action:hover,
+.list-group.list-group-flush .list-group-item-action:focus {
+  background-color: rgba(35, 61, 77, 0.04);
 }
 
 .list-info{
@@ -228,4 +317,99 @@ button{
   top: 150px; 
   right: -80px;
   width: 300px;
+}
+
+/* Login & Register Pages */
+.login-card,
+.register-card {
+    width: min(100%, 420px);
+    border: 0;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 10px 10px rgba(250, 218, 133, 0.35);
+}
+
+.login-header,
+.register-header {
+    padding: 2.5rem 2rem 1.75rem;
+    background: linear-gradient(180deg, rgba(33,94,97,0.14), rgba(255,255,255,0.8));
+    text-align: center;
+}
+
+.login-header h2,
+.register-header h2 {
+    margin-bottom: 0.5rem;
+    font-family: "Playwrite DK Uloopet", cursive;
+    color: #233D4D;
+}
+
+.login-header p,
+.register-header p {
+    margin: 0;
+    color: #233D4D;
+    opacity: 0.82;
+}
+
+.login-body,
+.register-body {
+    padding: 2rem;
+    background: #ffffff;
+}
+
+.login-body .form-label,
+.register-body .form-label {
+    font-weight: 700;
+    color: #233D4D;
+}
+
+.login-body .form-control,
+.register-body .form-control {
+    border-radius: 0.9rem;
+    border: 1px solid #c9d7e7;
+    padding: 1rem 1rem;
+}
+
+.btn-login,
+.btn-register {
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    background-color: #215E61;
+    color: #F5FBE6;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-login:hover,
+.btn-register:hover {
+    background-color: #1a4f53;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+}
+
+.login-footer,
+.register-footer {
+    margin-top: 1.25rem;
+    text-align: center;
+    color: #233D4D;
+    opacity: 0.85;
+}
+
+.login-footer a,
+.register-footer a {
+    color: #215E61;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-footer a:hover,
+.register-footer a:hover {
+    text-decoration: underline;
 }

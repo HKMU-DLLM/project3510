@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>TakeIt</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="/main-style.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,29 +11,28 @@
 	</head>
     <body>
 
-		<div class="nav-bar playwrite-dk-uloopet" style="display: flex; justify-content: space-between; align-items: center;">
+		<div class="nav-bar playwrite-dk-uloopet">
 			<div class="dropdown">
-				<span>Login in</span>
-				<div class="dropdown-menu">
-					<a href="/customer">Login in</a>
-					<a href="/customer/register">Register</a>
-				</div>
+				<span><a href="/customer">Login in</a></span>
 			</div>
-			<div style="padding:10px;">
-				<a href="?lang=en">English</a> |
-				<a href="?lang=zh">中文</a>
+			<div class="lang-links" style="padding:10px;">
+				<a href="?lang=en">Eng</a> |
+				<a href="?lang=zh">中</a>
 			</div>
 		</div>
-		<ul>
+		<ul class="main-links">
             <li><a href="/"><%= __("home") %></a></li>
 			<li><a href="/concert"><%= __("concert") %></a></li>
 			<li><a href="/customer/orderhistory"><%= __("order_history") %></a></li>
 			<li><a href="#profile"><%= __("profile") %></a></li>
 		</ul>
-		</div>
 		
-			<div class="banner-container">
-				<div class="banner-track">
+		<div class="banner-container">
+			<div class="banner-controls">
+				<button id="scrollPrev" class="banner-scroll-btn banner-scroll-prev">❮</button>
+				<button id="scrollNext" class="banner-scroll-btn banner-scroll-next">❯</button>
+			</div>
+			<div class="banner-track" id="bannerTrack">
 					<div class="banner">
 						<div class="details-poster">
 						<img src="/Laufey.jpg" width="550px">
@@ -53,7 +53,7 @@
 							<div class="details-title">tuki. 1st ASIA TOUR 2026 in HONG KONG</div>
 							<div class="details-date">Saturday&Sunday, 9-10 May 2026</div>
 							<div class="details-location">AsiaWorld-Runway 11</div>
-							<div class="ticket-btn"><button><%= __("ticket") %></button></div>
+							<div><a href="/customer/buy_ticket" class="ticket-btn"><%= __("ticket") %></a></div>
 						</div>
 					</div>			
 					
@@ -65,7 +65,7 @@
 							<div class="details-title">King Gnu CEN+RAL Tour 2026 - Hong Kong</div>
 							<div class="details-date">Friday&Saturday, 29-30 May 2026</div>
 							<div class="details-location">AsiaWorld-Arena</div>
-							<div class="ticket-btn"><button><%= __("ticket") %></button></div>
+							<div><a href="/customer/buy_ticket" class="ticket-btn"><%= __("ticket") %></a></div>
 						</div>
 					</div>
 
@@ -77,71 +77,134 @@
 							<div class="details-title">《b.balance presents Music is Live &#124; &#60;3 symbol of love &#124; MC x CONSTANCE x Gareth.T 》</div>
 							<div class="details-date playfair-display">Sunday, 16 May 2026</div>
 							<div class="details-location">AsiaWorld-Arena</div>
-							<div class="ticket-btn "><button><%= __("ticket") %></button></div>
+							<div><a href="/customer/buy_ticket" class="ticket-btn"><%= __("ticket") %></a></div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="panel-container">
-				<div class="panel active" id="panel-1">
-					<div class="list-info list-name">ONE OK ROCK</div>
-					<div class="list-info list-date">Saturday&Sunday, 2-3 May 2026</div>
-					<div class="list-info list-location"> &#124; Central HarbourFront</div>
-				</div>
+			<div class="w-75 mx-auto mt-5">
+				<div class="list-group list-group-flush">
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">ONE OK ROCK</h5>
+							<small>Saturday & Sunday, 2-3 May 2026</small>
+						</div>
+						<p class="mb-1 text-muted">| Central HarbourFront</p>
+					</a>
 
-				<div class="panel" id="panel-2">
-					<div class="list-info list-name">TREASURE</div>
-					<div class="list-info list-date">Saturday, 9 May 2026</div>
-					<div class="list-info list-location">&#124; AsiaWorld-Arena</div>
-				</div>
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">TREASURE</h5>
+							<small>Saturday, 9 May 2026</small>
+						</div>
+						<p class="mb-1 text-muted">| AsiaWorld-Arena</p>
+					</a>
 
-				<div class="panel" id="panel-3">
-					<div class="list-info list-name">Sandy Lam Yik Lin</div>
-					<div class="list-info list-date">Saturday&Sunday, 16-17 May 2026</div>
-					<div class="list-info list-location">&#124; Kai Tak Stadium</div>
-				</div>
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">Sandy Lam Yik Lin</h5>
+							<small>Saturday & Sunday, 16-17 May 2026</small>
+						</div>
+						<p class="mb-1 text-muted">| Kai Tak Stadium</p>
+					</a>
 
-				<div class="panel" id="panel-4">
-					<div class="list-info list-name">Jenevieve</div>
-					<div class="list-info list-date">Tuesday, 19 May 2026</div>
-					<div class="list-info list-location">&#124; TIDES</div>
-				</div>
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">Jenevieve</h5>
+							<small>Tuesday, 19 May 2026</small>
+						</div>
+						<p class="mb-1 text-muted">| TIDES</p>
+					</a>
 
-				<div class="panel" id="panel-5">
-					<div class="list-info list-name">EXO</div>
-					<div class="list-info list-date">Saturday&Sunday, 13-14 June 2026</div>
-					<div class="list-info list-location"> &#124; AsiaWorld-Arena</div>
-				</div>
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">EXO</h5>
+							<small>Saturday & Sunday, 13-14 June 2026</small>
+						</div>
+						<p class="mb-1 text-muted">| AsiaWorld-Arena</p>
+					</a>
 
-				<div class="panel" id="panel-6">
-					<div class="list-info list-name">ITZY</div>
-					<div class="list-info list-date">Saturday, 20 June 2026</div>
-					<div class="list-info list-location"> &#124; AsiaWorld-Arena</div>
-				</div>
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">ITZY</h5>
+							<small>Saturday, 20 June 2026</small>
+						</div>
+						<p class="mb-1 text-muted">| AsiaWorld-Arena</p>
+					</a>
 
-				<div class="panel" id="panel-7">
-					<div class="list-info list-name">LANY</div>
-					<div class="list-info list-date">Wednesday, 20 September 2026</div>
-					<div class="list-info list-location"> &#124; AsiaWorld-Expo, Hall 10</div>
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">LANY</h5>
+							<small>Wednesday, 20 September 2026</small>
+						</div>
+						<p class="mb-1 text-muted">| AsiaWorld-Expo, Hall 10</p>
+					</a>
 				</div>
-				
 			</div>
     </body>
 
 	<script>
-		let panelsElement = document.querySelectorAll('.panel');
+		let listItems = document.querySelectorAll('.list-group-item');
 		let removeActiveClasses = () => {
-			panelsElement.forEach(panel => {
-				panel.classList.remove('active');
+			listItems.forEach(item => {
+				item.classList.remove('active');
 			});
 		};
 
-		panelsElement.forEach(panel => {
-			panel.addEventListener('click', () => {
+		listItems.forEach(item => {
+			item.addEventListener('click', () => {
 				removeActiveClasses();
-				panel.classList.add('active');
+				item.classList.add('active');
 			});
 		});
+
+		// Banner scroll functionality
+		const bannerTrack = document.getElementById('bannerTrack');
+		const scrollPrevBtn = document.getElementById('scrollPrev');
+		const scrollNextBtn = document.getElementById('scrollNext');
+		let currentScroll = 0;
+		let autoScrollInterval;
+
+		const updateBannerPosition = () => {
+			bannerTrack.style.transform = `translateX(${currentScroll}%)`;
+		};
+
+		const goToNextSlide = () => {
+			currentScroll -= 25;
+			if (currentScroll < -75) {
+				currentScroll = 0;
+			}
+			updateBannerPosition();
+		};
+
+		const goToPrevSlide = () => {
+			currentScroll += 25;
+			if (currentScroll > 0) {
+				currentScroll = -75;
+			}
+			updateBannerPosition();
+		};
+
+		scrollNextBtn.addEventListener('click', () => {
+			goToNextSlide();
+			resetAutoScroll();
+		});
+
+		scrollPrevBtn.addEventListener('click', () => {
+			goToPrevSlide();
+			resetAutoScroll();
+		});
+
+		const startAutoScroll = () => {
+			autoScrollInterval = setInterval(goToNextSlide, 5000);
+		};
+
+		const resetAutoScroll = () => {
+			clearInterval(autoScrollInterval);
+			startAutoScroll();
+		};
+
+		startAutoScroll();
 	</script>
 </html>

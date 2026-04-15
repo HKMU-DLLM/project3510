@@ -1,42 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/main-style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+DK+Uloopet:wght@100..400&display=swap" rel="stylesheet">
     <style>
-        .container { max-width: 400px; margin: 30px auto; }
-        .form-group { margin-bottom: 15px; }
-        label { display:block; margin-bottom:5px; }
-        input { width:100%; padding:8px; }
-        .error { color:red; font-size:12px; }
-        button { padding:10px; width:100%; background:#007bff; color:white; border:none; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #F5FBE6;
+            font-family: "Playfair Display", serif;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Register</h2>
+    <div class="card register-card">
+        <div class="register-header">
+            <h2>Customer Register</h2>
+            <p>Join us and start booking your favorite concerts.</p>
+        </div>
+        <div class="register-body">
+            <form action="/customer/register" method="POST">
+                <div class="mb-4">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                </div>
 
-        <form action="/customer/register" method="POST">
-            <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" name="name" required>
+                <div class="mb-4">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+
+                <div class="button-row mb-3">
+                    <button type="submit" class="btn btn-register">Register</button>
+                </div>
+            </form>
+
+            <div class="register-footer">
+                Already have an account? <a href="/customer">Login here</a>
             </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" required>
-            </div>
-
-            <button type="submit">Register</button>
-        </form>
-
-        <br>
-        Already have an account? <a href="/customer">Login here</a>
+        </div>
     </div>
 </body>
 </html>

@@ -150,4 +150,46 @@ router.get("/comfirm_order/:id", isCustomer, (req, res) => {
 	}
 });
 
+router.get("/orderhistory", isCustomer, (req, res) => {
+    const userId = req.session.user.user_id;
+
+    try {
+        const stmt = db.prepare(`
+    SELECT o.order_id, o.total_paid, o.buying_time, ot.chosen_zone, ot.quantity, c.title, c.location, c.date, c.time
+    FROM Orders o
+    JOIN Order_tickets ot ON o.order_id = ot.order_id
+    JOIN Concerts c ON ot.concert_id = c.id
+    WHERE o.user_id = ?
+    ORDER BY o.buying_time DESC
+    `);
+        const rows = stmt.all(userId);
+
+        const groupedOrders = {};
+
+        rows.forEach(row => {
+            if (!groupedOrders[row.order_id]) {
+                groupedOrders[row.order_id] = {
+                    order_id: row.order_id,
+                    total_paid: row.total_paid,
+                    buying_time: row.buying_time,
+                    title: row.title,
+                    location: row.location,
+                    date: row.date,
+                    time: row.time,
+                    tickets: []
+                };
+            }
+            groupedOrders[row.order_id].tickets.push({
+                zone: row.chosen_zone,
+                quantity: row.quantity
+            });
+        });
+
+        res.render("customer/customer_orderHistory", { orders: Object.values(groupedOrders) });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Database error");
+    }
+});
+
 module.exports = router;

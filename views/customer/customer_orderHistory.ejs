@@ -28,33 +28,39 @@
             <ul>
                 <li><a href="/"><%= __("home") %></a></li>
 			    <li><a href="/concert"><%= __("concert") %></a></li>
-                <li><a href="/customer/orderhistory"><%= __("order_history") %></a></li>
+                <li><a href="#Orderhistory"><%= __("order_history") %></a></li>
                 <li><a href="#profile"><%= __("profile") %></a></li>
             </ul>
         </div>
 
         <div class="concert playfair-display">
-            <div class="row g-4">
-				<% concert.forEach(c => { %>
-				<div class="col-md-4">
-					<div class="card h-100" id="concert-card">
-						<div class="card-body">
-							<h4 class="card-title"><%= c.title %></h4>
-							<p class="card-text text-muted">
-                                <%= c.date %><%= c.location %>
-                            </p>
-							<% if (c.ready_to_launch !== 0) { %>
-                                <a href="/customer/buy_ticket/<%= c.id %>" class="btn btn-primary w-100" id="view-button">
-                                    Take It
-                                </a>
-                            <% } else { %>
-                                <button class="btn btn-secondary w-100" disabled>Not yet launched</button>
-                            <% } %>
-						</div>
-					</div>
-				</div>
-				<% }) %>
-			</div>
-        </div>
+    <div class="row g-4">
+        <% orders.forEach(order => { %>
+            <div class="col-12 border-bottom pb-4 mb-4">
+                <h3 class="fw-bold"><%= order.title %></h3>
+                
+                <p class="text-muted">
+                    <i class="bi bi-geo-alt"></i> <%= order.location %> | 
+                    <i class="bi bi-calendar-event"></i> <%= order.date %> <%= order.time %>
+                </p>
+
+                <div class="mb-2">
+                    <% order.tickets.forEach(ticket => { %>
+                        <span class="badge bg-secondary me-2">
+                            Zone <%= ticket.zone %>: <%= ticket.quantity %> ticket(s)
+                        </span>
+                    <% }) %>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-secondary">Order time: <%= order.buying_time %></small>
+                    <div class="fs-5">
+                        Total Price: <span class="fw-bold text-primary">$<%= order.total_paid %></span>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
     </body>
 </html>

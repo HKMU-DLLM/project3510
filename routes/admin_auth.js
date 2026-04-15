@@ -56,7 +56,6 @@ router.get("/sales_report/:concertId", isAdmin, (req, res) => {
                 c.ZoneA_Ticket,
                 c.ZoneB_Ticket,
                 COUNT(DISTINCT ot.user_id) AS total_customers, 
-                -- 使用 IFNULL 確保即使沒人買票也回傳 0 而不是 null
                 IFNULL(SUM(ot.quantity), 0) AS total_tickets_sold,         
                 
                 IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneA' THEN ot.quantity ELSE 0 END), 0) AS zone_a_sold,

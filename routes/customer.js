@@ -88,14 +88,62 @@ router.post("/login", (req, res) => {
 
 
 router.get("/buy_ticket/:id", isCustomer, (req, res) => {
-const id = req.params.id;
+    const id = req.params.id;
 
 	try {
 		const stmt = db.prepare("SELECT * FROM Concerts WHERE id = ?");
 		const ticket = stmt.get(id);
-		console.log(ticket);
+
+        if (ticket.ready_to_launch === 0) {
+                    return res.status(403).send("This concert is no longer accepting ticket purchases.");
+                }
 
 		res.render("customer/buy_ticket", { ticket, id });
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Database error");
+	}
+});
+
+router.post("/order", (req, res) => {
+    const{ concert_id, qty_A, qty_B, price_A, price_B } = req.body;
+    const userId = req.session.user.user_id;
+    const userName = req.session.user.name;
+    const total_paid = (qty_A * price_A) + (qty_B * price_B);
+
+    try{
+        const order_stmt = db.prepare(`INSERT INTO Orders(user_id, name, total_paid) VALUES(?,?,?) `);
+        order_stmt.run(userId, userName, total_paid);
+        const result = order_stmt.run(userId, userName, total_paid);
+        const orderId = result.lastInsertRowid;
+
+        const ticket_stmt = db.prepare(`INSERT INTO Order_tickets(concert_id, order_id, user_id, chosen_zone, quantity) VALUES(?,?,?,?,?)`);
+
+        if (parseInt(qty_A)>0){
+            ticket_stmt.run(concert_id, orderId, userId, 'Zone A', qty_A);
+            db.prepare(`UPDATE Concerts SET ZoneA_Ticket = ZoneA_Ticket - ? WHERE id = ?`).run(qty_A, concert_id);
+        }
+
+        if (parseInt(qty_B)>0){
+            ticket_stmt.run(concert_id, orderId, userId, 'Zone B', qty_B);
+            db.prepare(`UPDATE Concerts SET ZoneB_Ticket = ZoneB_Ticket - ? WHERE id = ?`).run(qty_B, concert_id);
+        }
+
+        return res.redirect(`/customer/comfirm_order/${orderId}`);
+
+    }catch (err) {
+        res.status(500).send("Purchase failed: " + err.message);
+    }
+});
+
+router.get("/comfirm_order/:id", isCustomer, (req, res) => {
+    const id = req.params.id;
+
+	try {
+		const stmt = db.prepare("SELECT * FROM Orders WHERE order_id = ?");
+		const order = stmt.get(id);
+
+		res.render("customer/comfirm_order", { order, id });
 	} catch (err) {
 		console.error(err);
 		res.status(500).send("Database error");

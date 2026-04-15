@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+DK+Uloopet:wght@100..400&display=swap" rel="stylesheet">
     </head>
     <body>
-        
+
         <div class="nav-bar playwrite-dk-uloopet" style="display: flex; justify-content: space-between; align-items: center;">
 			<div class="dropdown">
 				<span>Login in</span>
@@ -32,29 +32,6 @@
                 <li><a href="#profile"><%= __("profile") %></a></li>
             </ul>
         </div>
-
-        <div class="concert playfair-display">
-            <div class="row g-4">
-				<% concert.forEach(c => { %>
-				<div class="col-md-4">
-					<div class="card h-100" id="concert-card">
-						<div class="card-body">
-							<h4 class="card-title"><%= c.title %></h4>
-							<p class="card-text text-muted">
-                                <%= c.date %><%= c.location %>
-                            </p>
-							<% if (c.ready_to_launch !== 0) { %>
-                                <a href="/customer/buy_ticket/<%= c.id %>" class="btn btn-primary w-100" id="view-button">
-                                    Take It
-                                </a>
-                            <% } else { %>
-                                <button class="btn btn-secondary w-100" disabled>Not yet launched</button>
-                            <% } %>
-						</div>
-					</div>
-				</div>
-				<% }) %>
-			</div>
-        </div>
+        Your Order is completed sucessfully!
     </body>
 </html>

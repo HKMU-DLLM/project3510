@@ -13,8 +13,9 @@
 
 		<div class="nav-bar playwrite-dk-uloopet">
 			<div class="dropdown">
-				<span><a href="/customer">Login in</a></span>
+				<span><a href="/customer">Login</a></span>
 			</div>
+
 			<div class="lang-links" style="padding:10px;">
 				<a href="?lang=en">Eng</a> |
 				<a href="?lang=zh">中</a>
@@ -85,63 +86,16 @@
 
 			<div class="w-75 mx-auto mt-5">
 				<div class="list-group list-group-flush">
+					<% concert.forEach(c => { %>
+						
 					<a href="#" class="list-group-item list-group-item-action">
 						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">ONE OK ROCK</h5>
-							<small>Saturday & Sunday, 2-3 May 2026</small>
+							<h5 class="mb-1"><%= c.title %></h5>
+							<small><%= c.date %></small>
 						</div>
-						<p class="mb-1 text-muted">| Central HarbourFront</p>
+						<p class="mb-1 text-muted">| <%= c.location %></p>
 					</a>
-
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">TREASURE</h5>
-							<small>Saturday, 9 May 2026</small>
-						</div>
-						<p class="mb-1 text-muted">| AsiaWorld-Arena</p>
-					</a>
-
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">Sandy Lam Yik Lin</h5>
-							<small>Saturday & Sunday, 16-17 May 2026</small>
-						</div>
-						<p class="mb-1 text-muted">| Kai Tak Stadium</p>
-					</a>
-
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">Jenevieve</h5>
-							<small>Tuesday, 19 May 2026</small>
-						</div>
-						<p class="mb-1 text-muted">| TIDES</p>
-					</a>
-
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">EXO</h5>
-							<small>Saturday & Sunday, 13-14 June 2026</small>
-						</div>
-						<p class="mb-1 text-muted">| AsiaWorld-Arena</p>
-					</a>
-
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">ITZY</h5>
-							<small>Saturday, 20 June 2026</small>
-						</div>
-						<p class="mb-1 text-muted">| AsiaWorld-Arena</p>
-					</a>
-
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">LANY</h5>
-							<small>Wednesday, 20 September 2026</small>
-						</div>
-						<p class="mb-1 text-muted">| AsiaWorld-Expo, Hall 10</p>
-					</a>
-				</div>
-			</div>
+						<% }) %>					
     </body>
 
 	<script>

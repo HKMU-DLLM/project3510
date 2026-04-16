@@ -37,10 +37,18 @@ app.use(
 
 app.get("/", (req, res) => {
   console.log("New access to website");
-  res.status(200).render("main", {
-    title: res.__("title"),
-    welcome: res.__("welcome")
-  });
+try {
+        const concertData = db.prepare("SELECT * FROM Concerts").all();
+
+        res.status(200).render("main", {
+            concert: concertData,                  
+            title: res.__("title"),                 
+            welcome: res.__("welcome"),            
+            isLoggedIn: req.session && req.session.isLoggedIn  
+        });
+    } catch (err) {
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 app.use("/admin", adminRouter);

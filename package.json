@@ -8,9 +8,10 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "better-sqlite3": "latest",
+    "cookie-parser": "^1.4.7",
     "ejs": "latest",
     "express": "latest",
-    "better-sqlite3": "latest",
     "express-session": "latest",
     "i18n": "latest"
   },

@@ -95,6 +95,27 @@ body {
     color: white;
 }
 
+.lang-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lang-links a {
+    color: #233D4D;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.lang-links a:hover {
+    background-color: rgba(35, 61, 77, 0.08);
+    border-color: rgba(35, 61, 77, 0.2);
+}
+
 ul{
   display: flex;
   list-style-type: none;
@@ -452,3 +473,20 @@ button:hover {
 .register-footer a:hover {
     text-decoration: underline;
 }
+
+/* Concert Cards */
+#concert-card {
+    border: 0;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.concert .btn {
+    box-shadow: none;
+    height: 3rem;
+    background-color: #1a4f53
+}
+.concert .btn:hover {
+    background-color: #203e42;
+}
+

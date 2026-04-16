@@ -35,6 +35,12 @@ app.use(
 	})
 );
 
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = req.session?.isLoggedIn || false;
+    res.locals.currentUser = req.session?.user || null;
+    next();
+});
+
 app.get("/", (req, res) => {
   console.log("New access to website");
 try {

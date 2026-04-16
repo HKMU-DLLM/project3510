@@ -27,33 +27,72 @@ body {
   align-items: center;
   gap: 1rem;
   padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  background-color: rgba(245, 251, 230, 0.97);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  border-bottom: 1.5px solid rgba(35, 61, 77, 0.22);
 }
 
 .dropdown {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+.dropdown span,
 .dropdown a {
+    color: #233D4D;
+    font-weight: 600;
     text-decoration: none;
 }
 
-.dropdown a:hover {
-    text-decoration: underline;
+.dropdown:hover {
+    background-color: rgba(35, 61, 77, 0.08);
+    border-color: rgba(35, 61, 77, 0.2);
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu,
+.dropdown-menu:hover {
  display: block;
 }
 
 .dropdown-menu {
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: white;  
-    border: 1px solid #333;  
-    min-width: 140px;
+    margin-top: 0rem;
+    background-color: #ffffff;
+    border: 1px solid rgba(35, 61, 77, 0.16);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+    border-radius: 1rem;
+    width: 100%;
     z-index: 999;
+    overflow: hidden;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #233D4D;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-menu a + a {
+    border-top: 1px solid rgba(35, 61, 77, 0.08);
+}
+
+.dropdown-menu a:hover {
+    background-color: #233D4D;
+    color: white;
 }
 
 ul{

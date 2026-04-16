@@ -13,7 +13,16 @@
 
 		<div class="nav-bar playwrite-dk-uloopet">
 			<div class="dropdown">
-				<span><a href="/customer">Login</a></span>
+				<% if (!isLoggedIn) { %>
+					<span><a href="/customer">Login</a></span>
+				<% } else if (currentUser && currentUser.role === 'customer') { %>
+					<span>Welcome! <%= currentUser.name ? currentUser.name : 'Customer' %></span>
+					<div class="dropdown-menu">
+						<a href="/customer/orderhistory">Order History</a>
+						<a href="/customer">Account</a>
+						<a href="/customer/logout">Logout</a>
+					</div>
+				<% } %>
 			</div>
 
 			<div class="lang-links" style="padding:10px;">

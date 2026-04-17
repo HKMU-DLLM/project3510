@@ -14,13 +14,13 @@
 		<div class="nav-bar playwrite-dk-uloopet">
 			<div class="dropdown">
 				<% if (!isLoggedIn) { %>
-					<span><a href="/customer">Login</a></span>
+					<span><a href="/customer"><%= __('login') %></a></span>
 				<% } else if (currentUser && currentUser.role === 'customer') { %>
-					<span>Welcome! <%= currentUser.name ? currentUser.name : 'Customer' %></span>
+					<span><%= __('welcome') %> <%= currentUser.name ? currentUser.name : 'Customer' %></span>
 					<div class="dropdown-menu">
-						<a href="/customer/orderhistory">Order History</a>
-						<a href="/customer">Account</a>
-						<a href="/customer/logout">Logout</a>
+						<a href="/customer/orderhistory"><%= __('order_history') %></a>
+						<a href="/customer"><%= __('account') %></a>
+						<a href="/customer/logout"><%= __('logout') %></a>
 					</div>
 				<% } %>
 			</div>
@@ -51,15 +51,15 @@
                 <div class="mb-2">
                     <% order.tickets.forEach(ticket => { %>
                         <span class="badge bg-secondary me-2">
-                            Zone <%= ticket.zone %>: <%= ticket.quantity %> ticket(s)
+                            <%= __('zone') %> <%= ticket.zone %>: <%= ticket.quantity %> <%= __('ticket_s') %>
                         </span>
                     <% }) %>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <small class="text-secondary">Order time: <%= order.buying_time %></small>
+                    <small class="text-secondary"><%= __('order_time') %><%= order.buying_time %></small>
                     <div class="fs-5">
-                        Total Price: <span class="fw-bold text-primary">$<%= order.total_paid %></span>
+                        <%= __('total_price') %><span class="fw-bold text-primary">$<%= order.total_paid %></span>
                     </div>
                 </div>
             </div>

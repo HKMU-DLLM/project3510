@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS Customer  (
     password        TEXT        NOT NULL,
     role            TEXT        NOT NULL DEFAULT 'customer'
 );
+
 CREATE TABLE IF NOT EXISTS Concerts (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     title TEXT, 
@@ -23,7 +24,9 @@ CREATE TABLE IF NOT EXISTS Concerts (
     date TEXT,
     ready_to_launch INTEGER MOT NULL,
     organizer TEXT,
-    time TEXT
+    time TEXT,
+    Sold_ZoneA_Ticket INTEGER DEFAULT (0),
+    Sold_ZoneB_Ticket INTEGER DEFAULT (0)
 );  
 
 CREATE TABLE IF NOT EXISTS Orders (

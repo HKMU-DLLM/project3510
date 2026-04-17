@@ -24,8 +24,8 @@ router.get("/profile", isAdmin, (req, res) => {
 });
 
 router.post("/concerts/create", isAdmin, (req, res) => {
-    const { title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, is_published } = req.body;
-
+    const { title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, Sold_ZoneA_Ticket, Sold_ZoneB_Ticket } = req.body;
+    
     let ready_to_launch = 0;
     if (req.body.is_published) {
         if (Array.isArray(is_published)) {
@@ -36,8 +36,8 @@ router.post("/concerts/create", isAdmin, (req, res) => {
     }
 
     try {
-        const stmt = db.prepare('INSERT INTO Concerts (title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, ready_to_launch) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        stmt.run(title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, ready_to_launch);
+        const stmt = db.prepare('INSERT INTO Concerts (title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, ready_to_launch, Sold_ZoneA_Ticket, Sold_ZoneB_Ticket ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        stmt.run(title, organizer, ZoneA_Ticket, ZoneA_Price, ZoneB_Ticket, ZoneB_Price, location, date, time, ready_to_launch, Sold_ZoneA_Ticket, Sold_ZoneB_Ticket );
     } catch (error) {
         console.error("Error inserting concert:", error);
         return res.status(500).send("An error occurred while creating the concert. <a href='/admin/form'>Try again</a>");
@@ -51,31 +51,34 @@ router.get("/sales_report/:concertId", isAdmin, (req, res) => {
     try {
         const sql_query = `
             SELECT 
-                c.id AS concert_id,
-                c.title AS concert_title,
-                c.ZoneA_Ticket,
-                c.ZoneB_Ticket,
-                COUNT(DISTINCT ot.user_id) AS total_customers, 
-                IFNULL(SUM(ot.quantity), 0) AS total_tickets_sold,         
-                
-                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneA' THEN ot.quantity ELSE 0 END), 0) AS zone_a_sold,
-                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneA' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END), 0) AS zone_a_revenue,
+            c.id AS concert_id,
+            c.title AS concert_title,
+            c.ZoneA_Ticket,
+            c.ZoneB_Ticket,
+            c.Sold_ZoneA_Ticket,
+            c.Sold_ZoneB_Ticket,
+            
+            COUNT(DISTINCT ot.user_id) AS total_customers, 
+            IFNULL(SUM(ot.quantity), 0) AS total_tickets_sold,          
+            
+            IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN ot.quantity ELSE 0 END), 0) AS calculated_zone_a_sold,
+            IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END), 0) AS zone_a_revenue,
 
-                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneB' THEN ot.quantity ELSE 0 END), 0) AS zone_b_sold,
-                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'ZoneB' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END), 0) AS zone_b_revenue,
+            IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN ot.quantity ELSE 0 END), 0) AS calculated_zone_b_sold,
+            IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END), 0) AS zone_b_revenue,
 
-                -- 總收入計算
-                IFNULL(
-                    (SUM(CASE WHEN ot.chosen_zone = 'ZoneA' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END) +
-                     SUM(CASE WHEN ot.chosen_zone = 'ZoneB' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END)), 
-                0) AS total_revenue
-    
-            FROM Concerts c
-            LEFT JOIN Order_tickets ot ON c.id = ot.concert_id
-            WHERE c.id = ?
-            GROUP BY c.id;
+            IFNULL(
+                SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END) +
+                SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END), 
+            0) AS total_revenue
+
+        FROM Concerts c
+        LEFT JOIN Order_tickets ot ON c.id = ot.concert_id
+        WHERE c.id = ?
+        GROUP BY c.id;
+        
         `;
-        const concert = db.prepare(sql_query).get(concertId);
+        const concert = db.prepare(sql_query).get(concertId); 
         if (!concert) {
             return res.status(404).send("Concert not found");
         }

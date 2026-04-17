@@ -137,17 +137,29 @@ router.post("/order", (req, res) => {
 });
 
 router.get("/comfirm_order/:id", isCustomer, (req, res) => {
-    const id = req.params.id;
+    const orderId = req.params.id;
 
-	try {
-		const stmt = db.prepare("SELECT * FROM Orders WHERE order_id = ?");
-		const order = stmt.get(id);
+    try {
+        const order = db.prepare(`
+            SELECT ot.*, o.*, c.title, c.date, c.location, c.time
+            FROM Order_tickets ot, Orders o
+            JOIN Concerts c ON o.concert_id = c.id
+            WHERE o.order_id = ?
+        `).get(orderId);
 
-		res.render("customer/comfirm_order", { order, id });
-	} catch (err) {
-		console.error(err);
-		res.status(500).send("Database error");
-	}
+        if (!order) {
+            return res.redirect('/concert');
+        }
+
+        res.render("customer/comfirm_order", { 
+            order, 
+            isLoggedIn: req.session.isLoggedIn,
+            currentUser: req.session.user 
+        });
+    } catch (err) {
+        console.error("Confirmation Page Error:", err);
+        res.status(500).send("Database error");
+    }
 });
 
 router.get("/orderhistory", isCustomer, (req, res) => {
@@ -190,6 +202,15 @@ router.get("/orderhistory", isCustomer, (req, res) => {
         console.error(err);
         res.status(500).send("Database error");
     }
+});
+
+router.get("/user_profile", isCustomer, (req, res) => {
+    const user = req.session.user;
+    console.log("Current Session User:", user);
+    if (!user) {
+            return res.redirect('/customer');
+        }
+    res.render("customer/user_profile", { user });
 });
 
 router.get("/logout", (req, res) => {

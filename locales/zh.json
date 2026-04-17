@@ -15,7 +15,6 @@
 	"cancel": "取消",
 	"save_concert": "儲存演唱會",
 	"update_concert": "更新演唱會",
-
 	"_admin_profile": "中文文本",
 	"concert_management": "演唱會管理系統",
 	"create_new_activity": "建立新活動",
@@ -25,7 +24,6 @@
 	"actions": "操作",
 	"published": "已發布",
 	"draft": "草稿",
-
 	"_sales_report": "中文文本",
 	"dashboard": "儀表板",
 	"sales_report": "業績報表",
@@ -41,7 +39,6 @@
 	"revenue": "營收",
 	"left": "剩餘",
 	"back_to_dashboard": "返回儀表板",
-
 	"_buy_ticket.ejs": "中文文本",
 	"takeit_buy_ticket": "TakeIt - 購買門票",
 	"login": "登入",
@@ -57,5 +54,6 @@
 	"welcome": "歡迎！",
 	"zone_a": "A 區",
 	"zone_b": "B 區",
-	"confirm_purchase": "確認購買"
+	"confirm_purchase": "確認購買",
+	"title": "title"
 }

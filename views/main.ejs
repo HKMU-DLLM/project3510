@@ -34,7 +34,7 @@
             <li><a href="/"><%= __("home") %></a></li>
 			<li><a href="/concert"><%= __("concert") %></a></li>
 			<li><a href="/customer/orderhistory"><%= __("order_history") %></a></li>
-			<li><a href="#profile"><%= __("profile") %></a></li>
+			<li><a href="/customer/user_profile"><%= __("profile") %></a></li>
 		</ul>
 		
 		<div class="banner-container">
@@ -97,7 +97,7 @@
 				<div class="list-group list-group-flush">
 					<% concert.forEach(c => { %>
 						
-					<a href="#" class="list-group-item list-group-item-action">
+					<a href="/customer/buy_ticket/<%= c.id %>" class="list-group-item list-group-item-action">
 						<div class="d-flex w-100 justify-content-between">
 							<h5 class="mb-1"><%= c.title %></h5>
 							<small><%= c.date %></small>

@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Orders (
     user_id         INTEGER     NOT NULL,
     name            TEXT        NOT NULL,
     buying_time     DATETIME    DEFAULT CURRENT_TIMESTAMP,
-    total_paid      REAL,
+    total_paid      REAL    ,
     FOREIGN KEY (user_id) REFERENCES Customer(user_id)
 );
 

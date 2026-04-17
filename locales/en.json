@@ -54,5 +54,6 @@
 	"welcome": "welcome",
 	"zone_a": "Zone A",
 	"zone_b": "Zone B",
-	"confirm_purchase": "Confirm Purchase"
+	"confirm_purchase": "Confirm Purchase",
+	"title": "title"
 }

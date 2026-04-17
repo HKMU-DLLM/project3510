@@ -21,6 +21,12 @@ i18n.configure({
 });
 
 app.use(i18n.init);
+app.use((req, res, next) => {
+    res.locals.__ = req.__;
+    res.locals.locale = req.getLocale(); 
+    next();
+});
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));

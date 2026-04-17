@@ -121,12 +121,12 @@ router.post("/order", (req, res) => {
 
         if (parseInt(qty_A)>0){
             ticket_stmt.run(concert_id, orderId, userId, 'Zone A', qty_A);
-            db.prepare(`UPDATE Concerts SET ZoneA_Ticket = ZoneA_Ticket - ? WHERE id = ?`).run(qty_A, concert_id);
+            db.prepare(`UPDATE Concerts SET Sold_ZoneA_Ticket = Sold_ZoneA_Ticket - ? WHERE id = ?`).run(qty_A, concert_id);
         }
 
         if (parseInt(qty_B)>0){
             ticket_stmt.run(concert_id, orderId, userId, 'Zone B', qty_B);
-            db.prepare(`UPDATE Concerts SET ZoneB_Ticket = ZoneB_Ticket - ? WHERE id = ?`).run(qty_B, concert_id);
+            db.prepare(`UPDATE Concerts SET Sold_ZoneB_Ticket = Sold_ZoneB_Ticket - ? WHERE id = ?`).run(qty_B, concert_id);
         }
 
         return res.redirect(`/customer/comfirm_order/${orderId}`);

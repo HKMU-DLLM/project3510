@@ -13,12 +13,18 @@
     </style>
 </head>
 <body>
+<div class="nav-bar playwrite-dk-uloopet">
+    <div class="lang-links">
+        <a href="?lang=en">Eng</a> |
+        <a href="?lang=zh">中</a>
+    </div>
+</div>
 
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h3">Concert Management</h2>
+        <h2 class="h3"><%= __('concert_management') %></h2>
         <a href="/admin/form" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Create New Activity
+            <i class="bi bi-plus-circle"></i> <%= __('create_new_activity') %>
         </a>
     </div>
 
@@ -27,12 +33,12 @@
             <table class="table table-hover align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>Event Details</th>
-                        <th>Organizer</th>
-                        <th>Location</th>
-                        <th>Date & Time</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Actions</th>
+                        <th><%= __('event_details') %></th>
+                        <th><%= __('organizer') %></th>
+                        <th><%= __('location') %></th>
+                        <th><%= __('date_time') %></th>
+                        <th class="text-center"><%= __('status') %></th>
+                        <th class="text-center"><%= __('actions') %></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,9 +55,9 @@
                             </td>
                             <td class="text-center">
                                 <% if (concert.ready_to_launch == 1) { %>
-                                    <span class="badge bg-success status-badge">Published</span>
+                                    <span class="badge bg-success status-badge"><%= __('published') %></span>
                                 <% } else { %>
-                                    <span class="badge bg-secondary status-badge">Draft</span>
+                                    <span class="badge bg-secondary status-badge"><%= __('draft') %></span>
                                 <% } %>
                             </td>
                             <td class="text-center">

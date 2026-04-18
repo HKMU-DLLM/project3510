@@ -37,25 +37,25 @@
 			<li><a href="/customer/orderhistory"><%= __("order_history") %></a></li>
 			<li><a href="/customer/user_profile"><%= __("profile") %></a></li>
 		</ul>
-
+       <div class="mt-3" style="padding-left: 400px; padding-right: 400px;">
         <div class="buy-ticket-container playfair-display">
-            <p>
+            <h2 style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;">
                 <%= ticket.title %>
                 <%= ticket.date %>
                 <%= ticket.location %>
-            </p>    
+            </h2>
             <form id="purchaseForm" action="/customer/order" method="POST">
                <input type="hidden" name="concert_id" value="<%= ticket.id %>">
 
                 <div class="mb-3">
                     <label><%= __('zone_a') %> ($<%= ticket.ZoneA_Price %>)</label>
-                    <input type="number" name="qty_A" id="qty_A" value="0" min="0" class="form-control">
+                    <input type="number" name="qty_A" id="qty_A" value="0" min="0" class="form-control" style="width: 500px;">
                     <input type="hidden" name="price_A" value="<%= ticket.ZoneA_Price %>">
                 </div>
 
                 <div class="mb-3">
                     <label><%= __('zone_b') %> ($<%= ticket.ZoneB_Price %>)</label>
-                    <input type="number" name="qty_B" id="qty_B" value="0" min="0" class="form-control">
+                    <input type="number" name="qty_B" id="qty_B" value="0" min="0" class="form-control" style="width: 500px;">
                     <input type="hidden" name="price_B" value="<%= ticket.ZoneB_Price %>">
                 </div>
 

@@ -19,7 +19,7 @@
 					<span><%= __('welcome') %> <%= currentUser.name ? currentUser.name : 'Customer' %></span>
 					<div class="dropdown-menu">
 						<a href="/customer/orderhistory"><%= __('order_history') %></a>
-						<a href="/customer"><%= __('account') %></a>
+						<a href="/customer/user_profile"><%= __('account') %></a>
 						<a href="/customer/logout"><%= __('logout') %></a>
 					</div>
 				<% } %>
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 
-        <ul class="main-links">
+        <ul class="main-links playwrite-dk-uloopet">
             <li><a href="/"><%= __("home") %></a></li>
 			<li><a href="/concert"><%= __("concert") %></a></li>
 			<li><a href="/customer/orderhistory"><%= __("order_history") %></a></li>

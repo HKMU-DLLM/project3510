@@ -49,7 +49,7 @@
 	"cart": "Cart",
 	"order_history": "Order History",
 	"profile": "Profile",
-	"ticket": "Ticket",
+	"ticket": "TickIt",
 	"buy_ticket": "Buy Ticket",
 	"welcome": "welcome",
 	"zone_a": "Zone A",
@@ -94,5 +94,10 @@
 	"not_yet_launched": "Not yet launched",
 	"new_here": "New here?",
 	"Manage": "Manage",
-	"takeIt": "takeIt"
+	"takeIt": "takeIt",
+	"edit_profile": "edit profile",
+	"save_changes": "save changes",
+	"leave_blank_to_keep_password": "Leave blank to keep password",
+	"new_password": "New password",
+	"confirm_new_password": "Confirm New Password"
 }

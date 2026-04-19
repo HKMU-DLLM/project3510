@@ -94,5 +94,10 @@
 	"takeIt": "立即購票",
 	"not_yet_launched": "尚未開賣",
 	"new_here": "新用戶？",
-	"Manage": "Manage"
+	"Manage": "管理",
+	"edit_profile": "更新個人資料",
+	"save_changes": "儲存更改",
+	"leave_blank_to_keep_password": "留空以使用原密碼",
+	"new_password": "新密碼",
+	"confirm_new_password": "確認新密碼"
 }

@@ -223,6 +223,32 @@ router.get("/user_profile", isCustomer, (req, res) => {
     res.render("customer/user_profile", { user });
 });
 
+router.post("/update_profile", isCustomer, (req, res) => {
+    const { name, email } = req.body;
+    const userId = req.session.user.user_id;
+
+    try {
+        if (!name || !email) {
+            return res.redirect('/customer/user_profile?error=fields_required');
+        }
+
+        const stmt = db.prepare(`
+            UPDATE Customer 
+            SET name = ?, email = ? 
+            WHERE user_id = ?
+        `);
+        stmt.run(name, email, userId);
+
+        req.session.user.name = name;
+        req.session.user.email = email;
+
+        res.redirect('/customer/user_profile?success=updated');
+    } catch (err) {
+        console.error("Database Update Error:", err);
+        res.status(500).send("Failed to update profile.");
+    }
+});
+
 router.get("/logout", (req, res) => {
     req.session.destroy(err => {
         if (err) {

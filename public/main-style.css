@@ -1,9 +1,12 @@
 /* font */
-.playwrite-dk-uloopet {
+.playwrite-dk-uloopet,
+.playwrite-dk-uloopet span, 
+.playwrite-dk-uloopet a {
   font-family: "Playwrite DK Uloopet", cursive;
   font-optical-sizing: auto;
   font-style: normal;
 }
+
 .playfair-display {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
@@ -33,6 +36,10 @@ body {
   backdrop-filter: blur(10px);
   z-index: 100;
   border-bottom: 1.5px solid rgba(35, 61, 77, 0.22);
+}
+
+.nav-bar *, .nav-bar span, .nav-bar a {
+    font-family: "Playwrite DK Uloopet", cursive !important;
 }
 
 .dropdown {
@@ -248,14 +255,14 @@ img{
 
 .ticket-btn{
   position: absolute;
-  right: 0px;
+  right: -15px;
   bottom: 0px;
   display: inline-block;
   background-color: #215E61;
   color: #F5FBE6;
   font-family: "playfair-display", serif;
   font-size: 25px;
-  padding: 15px 30px;
+  padding: 15px;
   border: none;
   box-shadow: 10px 10px #fada85;
   text-decoration: none;

@@ -61,7 +61,7 @@
                 <span><%= __('welcome') %> <%= currentUser.name ? currentUser.name : 'Customer' %></span>
                 <div class="dropdown-menu">
                     <a href="/customer/orderhistory"><%= __('order_history') %></a>
-                    <a href="/customer"><%= __('account') %></a>
+                    <a href="/customer/user_profile"><%= __('account') %></a>
                     <a href="/customer/logout"><%= __('logout') %></a>
                 </div>
             <% } %>
@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <ul class="main-links">
+    <ul class="main-links playwrite-dk-uloopet">
         <li><a href="/"><%= __("home") %></a></li>
         <li><a href="/concert"><%= __("concert") %></a></li>
 		<li><a href="/customer/crderhistory"><%= __("order_history") %></a></li>
@@ -88,7 +88,7 @@
                 <h2 class="fw-bold mb-4"><%= __("profile") %></h2>
             </div>
 
-            <div class="row px-md-4">
+            <div id="viewSection" class="row px-md-4">
                 <div class="col-12">
                     <div class="info-label"><%= __('name') %></div>
                     <div class="info-value"><%= user.name %></div>
@@ -100,14 +100,60 @@
                 </div>
 
                 <div class="col-12 mt-4">
+                    <a href="javascript:void(0)" onclick="toggleEdit()" class="btn btn-outline-dark w-100 rounded-pill mb-2">
+                        <%= __('edit_profile') %>
+                    </a>
                     <a href="/customer/orderhistory" class="btn btn-outline-dark w-100 rounded-pill">
                         <%= __('view_my_orders') %>
                     </a>
                 </div>
             </div>
+
+            <form id="editSection" action="/customer/update_profile" method="POST" class="row px-md-4 d-none">
+                <div class="col-12 mb-3">
+                    <label class="info-label"><%= __('name') %></label>
+                    <input type="text" name="name" class="form-control" value="<%= user.name %>" required>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label class="info-label"><%= __('email_address') %></label>
+                    <input type="email" name="email" class="form-control" value="<%= user.email %>" required>
+                </div>
+
+                <hr class="my-4" style="opacity: 0.1;">
+                <p class="text-muted small"><%= __('leave_blank_to_keep_password') %></p>
+
+                <div class="col-12 mb-3">
+                    <label class="info-label"><%= __('new_password') %></label>
+                    <input type="password" name="new_password" class="form-control" placeholder="********">
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label class="info-label"><%= __('confirm_new_password') %></label>
+                    <input type="password" name="confirm_password" class="form-control" placeholder="********">
+                </div>
+
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-success w-100 rounded-pill mb-2">
+                        <%= __('save_changes') %>
+                    </button>
+                    <button type="button" onclick="toggleEdit()" class="btn btn-light w-100 rounded-pill">
+                        <%= __('cancel') %>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleEdit() {
+                const view = document.getElementById('viewSection');
+                const edit = document.getElementById('editSection');
+                view.classList.toggle('d-none');
+                edit.classList.toggle('d-none');
+            }
+    </script>
 </body>
 </html>

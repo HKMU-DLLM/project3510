@@ -7,8 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="/main-style.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+DK+Uloopet:wght@100..400&display=swap" rel="stylesheet">
-	</head>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+DK+Uloopet:wght@100..400&display=swap" rel="stylesheet">	</head>
     <body>
 
 		<div class="nav-bar playwrite-dk-uloopet">
@@ -19,7 +18,7 @@
 					<span><%= __('welcome') %> <%= currentUser.name ? currentUser.name : 'Customer' %></span>
 					<div class="dropdown-menu">
 						<a href="/customer/orderhistory"><%= __('order_history') %></a>
-						<a href="/customer"><%= __('account') %></a>
+						<a href="/customer/user_profile"><%= __('account') %></a>
 						<a href="/customer/logout"><%= __('logout') %></a>
 					</div>
 				<% } %>
@@ -30,7 +29,7 @@
 				<a href="?lang=zh">中</a>
 			</div>
 		</div>
-		<ul class="main-links">
+		<ul class="main-links playwrite-dk-uloopet">
             <li><a href="/"><%= __("home") %></a></li>
 			<li><a href="/concert"><%= __("concert") %></a></li>
 			<li><a href="/customer/orderhistory"><%= __("order_history") %></a></li>

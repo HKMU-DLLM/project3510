@@ -141,9 +141,19 @@ router.get("/comfirm_order/:id", isCustomer, (req, res) => {
 
     try {
         const order = db.prepare(`
-            SELECT ot.*, o.*, c.title, c.date, c.location, c.time
-            FROM Order_tickets ot, Orders o
-            JOIN Concerts c ON o.concert_id = c.id
+            SELECT 
+                o.order_id, 
+                o.total_paid, 
+                o.buying_time,
+                ot.chosen_zone, 
+                ot.quantity,
+                c.title, 
+                c.date, 
+                c.location, 
+                c.time
+            FROM Orders o
+            JOIN Order_tickets ot ON o.order_id = ot.order_id
+            JOIN Concerts c ON ot.concert_id = c.id
             WHERE o.order_id = ?
         `).get(orderId);
 
@@ -167,13 +177,13 @@ router.get("/orderhistory", isCustomer, (req, res) => {
 
     try {
         const stmt = db.prepare(`
-    SELECT o.order_id, o.total_paid, o.buying_time, ot.chosen_zone, ot.quantity, c.title, c.location, c.date, c.time
-    FROM Orders o
-    JOIN Order_tickets ot ON o.order_id = ot.order_id
-    JOIN Concerts c ON ot.concert_id = c.id
-    WHERE o.user_id = ?
-    ORDER BY o.buying_time DESC
-    `);
+        SELECT o.order_id, o.total_paid, o.buying_time, ot.chosen_zone, ot.quantity, c.title, c.location, c.date, c.time
+        FROM Orders o
+        JOIN Order_tickets ot ON o.order_id = ot.order_id
+        JOIN Concerts c ON ot.concert_id = c.id
+        WHERE o.user_id = ?
+        ORDER BY o.buying_time DESC
+        `);
         const rows = stmt.all(userId);
 
         const groupedOrders = {};

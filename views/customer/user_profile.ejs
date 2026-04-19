@@ -75,7 +75,7 @@
     <ul class="main-links">
         <li><a href="/"><%= __("home") %></a></li>
         <li><a href="/concert"><%= __("concert") %></a></li>
-        <li><a href="/customer/orderhistory"><%= __("order_history") %></a></li>
+		<li><a href="/customer/crderhistory"><%= __("order_history") %></a></li>
         <li><a href="/customer/user_profile" class="active"><%= __("profile") %></a></li>
     </ul>
 
@@ -97,13 +97,6 @@
                 <div class="col-12">
                     <div class="info-label"><%= __('email_address') %></div>
                     <div class="info-value"><%= user.email %></div>
-                </div>
-
-                <div class="col-12">
-                    <div class="info-label"><%= __('role') %></div>
-                    <div class="info-value">
-                        <span class="badge bg-dark rounded-pill px-3"><%= user.role %></span>
-                    </div>
                 </div>
 
                 <div class="col-12 mt-4">

@@ -36,44 +36,111 @@
 			<li><a href="/concert"><%= __("concert") %></a></li>
 			<li><a href="/customer/orderhistory"><%= __("order_history") %></a></li>
 			<li><a href="/customer/user_profile"><%= __("profile") %></a></li>
-		</ul>
-       <div class="mt-3" style="padding-left: 400px; padding-right: 400px;">
-        <div class="buy-ticket-container playfair-display">
-            <h2 style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;">
-                <%= ticket.title %>
-                <%= ticket.date %>
-                <%= ticket.location %>
-            </h2>
-            <form id="purchaseForm" action="/customer/order" method="POST">
-               <input type="hidden" name="concert_id" value="<%= ticket.id %>">
+</ul>
 
-                <div class="mb-3">
-                    <label><%= __('zone_a') %> ($<%= ticket.ZoneA_Price %>)</label>
-                    <input type="number" name="qty_A" id="qty_A" value="0" min="0" class="form-control" style="width: 500px;">
-                    <input type="hidden" name="price_A" value="<%= ticket.ZoneA_Price %>">
+    <div class="container mt-5 playfair-display">
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <div class="card p-4 shadow-sm" id="concert-card" style="background-color: white; border: none;">
+                        <div class="card-body">
+                            <h2 class="details-title mb-2" style="color: #FE7F2D; font-family: Copperplate, fantasy;">
+                                <%= ticket.title %>
+                            </h2>
+                            <p class="fs-4 text-muted border-bottom pb-3">
+                                <%= ticket.date %> | <%= ticket.location %>
+                            </p>
+
+                            <form id="purchaseForm" action="/customer/order" method="POST" class="mt-4">
+                                <input type="hidden" name="concert_id" value="<%= ticket.id %>">
+                                <input type="hidden" name="price_A" value="<%= ticket.ZoneA_Price %>">
+                                <input type="hidden" name="price_B" value="<%= ticket.ZoneB_Price %>">
+
+                                <% 
+                                    const availableA = ticket.ZoneA_Ticket - (ticket.Sold_ZoneA_Ticket || 0);
+                                    const availableB = ticket.ZoneB_Ticket - (ticket.Sold_ZoneB_Ticket || 0);
+                                %>
+
+                                <div class="mb-4 p-3 rounded" style="background-color: rgba(33, 94, 97, 0.05); border-left: 5px solid #215E61;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <label class="fw-bold fs-5"><%= __('zone_a') %></label>
+                                        <span class="fs-5 fw-bold" style="color: #215E61;">$<%= ticket.ZoneA_Price %></span>
+                                    </div>
+                                    <input type="number" name="qty_A" id="qty_A" value="0" min="0" 
+                                        max="<%= availableA %>" 
+                                        class="form-control form-control-lg mb-1"
+                                        <%= availableA <= 0 ? 'disabled' : '' %>>
+                                    <small class="text-muted"><%= availableA %> <%= __('left') %></small>
+                                </div>
+
+                                <div class="mb-4 p-3 rounded" style="background-color: rgba(254, 127, 45, 0.05); border-left: 5px solid #FE7F2D;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <label class="fw-bold fs-5"><%= __('zone_b') %></label>
+                                        <span class="fs-5 fw-bold" style="color: #FE7F2D;">$<%= ticket.ZoneB_Price %></span>
+                                    </div>
+                                    <input type="number" name="qty_B" id="qty_B" value="0" min="0" 
+                                        max="<%= availableB %>" 
+                                        class="form-control form-control-lg mb-1"
+                                        <%= availableB <= 0 ? 'disabled' : '' %>>
+                                    <small class="text-muted"><%= availableB %> <%= __('left') %></small>
+                                </div>
+
+                                <div class="mt-5 text-center">
+                                    <a href="javascript:void(0)" 
+                                    onclick="validateAndSubmit()" 
+                                    class="ticket-btn w-100 position-relative py-3 d-inline-block text-center text-decoration-none">
+                                        <%= __('confirm_purchase') %>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label><%= __('zone_b') %> ($<%= ticket.ZoneB_Price %>)</label>
-                    <input type="number" name="qty_B" id="qty_B" value="0" min="0" class="form-control" style="width: 500px;">
-                    <input type="hidden" name="price_B" value="<%= ticket.ZoneB_Price %>">
-                </div>
-
-                <button type="submit" class="btn btn-success"><%= __('confirm_purchase') %></button> 
-                        
-            </form>
+            </div>
         </div>
     </body>
 
-    <script>
-        document.getElementById('purchaseForm').onsubmit = function(e) {
-            const qtyA = parseInt(document.getElementById('qty_A').value) || 0;
-            const qtyB = parseInt(document.getElementById('qty_B').value) || 0;
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputA = document.getElementById('qty_A');
+        const inputB = document.getElementById('qty_B');
+        const MAX_ALLOWED = 6;
 
-            if (qtyA + qtyB <= 0) {
-                e.preventDefault();
-                alert("Please select at least one ticket before purchasing.");
-            }
-        };
-    </script>
+        if (inputA && inputB) {
+            [inputA, inputB].forEach(input => {
+                input.addEventListener('input', function() {
+                    let a = parseInt(inputA.value) || 0;
+                    let b = parseInt(inputB.value) || 0;
+                    
+                    if (a + b > MAX_ALLOWED) {
+                        alert("Total tickets cannot exceed " + MAX_ALLOWED);
+                        
+                        if (this === inputA) {
+                            this.value = MAX_ALLOWED - b;
+                        } else {
+                            this.value = MAX_ALLOWED - a;
+                        }
+                    }
+                });
+            });
+        }
+    });
+
+    function validateAndSubmit() {
+        const form = document.getElementById('purchaseForm');
+        const qtyA = parseInt(document.getElementById('qty_A').value) || 0;
+        const qtyB = parseInt(document.getElementById('qty_B').value) || 0;
+        
+        if (qtyA + qtyB <= 0) {
+            alert("Please select at least one ticket.");
+            return;
+        }
+        
+        if (qtyA + qtyB > 6) {
+            alert("Maximum 6 tickets total.");
+            return;
+        }
+
+        form.submit();
+    }
+</script>
 </html>

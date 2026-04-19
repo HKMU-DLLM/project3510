@@ -121,12 +121,12 @@ router.post("/order", (req, res) => {
 
         if (parseInt(qty_A)>0){
             ticket_stmt.run(concert_id, orderId, userId, 'Zone A', qty_A);
-            db.prepare(`UPDATE Concerts SET Sold_ZoneA_Ticket = Sold_ZoneA_Ticket - ? WHERE id = ?`).run(qty_A, concert_id);
+            db.prepare(`UPDATE Concerts SET Sold_ZoneA_Ticket = Sold_ZoneA_Ticket + ? WHERE id = ?`).run(qty_A, concert_id);
         }
 
         if (parseInt(qty_B)>0){
             ticket_stmt.run(concert_id, orderId, userId, 'Zone B', qty_B);
-            db.prepare(`UPDATE Concerts SET Sold_ZoneB_Ticket = Sold_ZoneB_Ticket - ? WHERE id = ?`).run(qty_B, concert_id);
+            db.prepare(`UPDATE Concerts SET Sold_ZoneB_Ticket = Sold_ZoneB_Ticket + ? WHERE id = ?`).run(qty_B, concert_id);
         }
 
         return res.redirect(`/customer/comfirm_order/${orderId}`);
@@ -140,35 +140,34 @@ router.get("/comfirm_order/:id", isCustomer, (req, res) => {
     const orderId = req.params.id;
 
     try {
-        const order = db.prepare(`
-            SELECT 
-                o.order_id, 
-                o.total_paid, 
-                o.buying_time,
-                ot.chosen_zone, 
-                ot.quantity,
-                c.title, 
-                c.date, 
-                c.location, 
-                c.time
-            FROM Orders o
-            JOIN Order_tickets ot ON o.order_id = ot.order_id
-            JOIN Concerts c ON ot.concert_id = c.id
-            WHERE o.order_id = ?
-        `).get(orderId);
+        const orderSummary = db.prepare(`SELECT * FROM Orders WHERE order_id = ?`).get(orderId);
 
-        if (!order) {
-            return res.redirect('/concert');
-        }
+        if (!orderSummary) return res.redirect('/concert');
+
+        const tickets = db.prepare(`
+            SELECT ot.*, c.title, c.location, c.date, c.time
+            FROM Order_tickets ot
+            JOIN Concerts c ON ot.concert_id = c.id
+            WHERE ot.order_id = ?
+        `).all(orderId);
+
+        const orderData = {
+            ...orderSummary,
+            title: tickets[0].title,
+            location: tickets[0].location,
+            date: tickets[0].date,
+            time: tickets[0].time
+        };
 
         res.render("customer/comfirm_order", { 
-            order, 
+            order: orderData, 
+            tickets: tickets,
             isLoggedIn: req.session.isLoggedIn,
             currentUser: req.session.user 
         });
     } catch (err) {
-        console.error("Confirmation Page Error:", err);
-        res.status(500).send("Database error");
+        console.error(err);
+        res.status(500).send("Error loading confirmation");
     }
 });
 

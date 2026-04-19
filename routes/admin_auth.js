@@ -51,42 +51,38 @@ router.get("/sales_report/:concertId", isAdmin, (req, res) => {
     try {
         const sql_query = `
             SELECT 
-            c.id AS concert_id,
-            c.title AS concert_title,
-            c.ZoneA_Ticket,
-            c.ZoneB_Ticket,
-            c.Sold_ZoneA_Ticket,
-            c.Sold_ZoneB_Ticket,
-            
-            COUNT(DISTINCT ot.user_id) AS total_customers, 
-            IFNULL(SUM(ot.quantity), 0) AS total_tickets_sold,          
-            
-            IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN ot.quantity ELSE 0 END), 0) AS calculated_zone_a_sold,
-            IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END), 0) AS zone_a_revenue,
+                c.id AS concert_id,
+                c.title AS concert_title,
+                c.ZoneA_Ticket, -- This is the Capacity
+                c.ZoneB_Ticket, -- This is the Capacity
+                    
+                COUNT(DISTINCT ot.user_id) AS total_customers, 
+                IFNULL(SUM(ot.quantity), 0) AS total_tickets_sold,   
 
-            IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN ot.quantity ELSE 0 END), 0) AS calculated_zone_b_sold,
-            IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END), 0) AS zone_b_revenue,
+                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN ot.quantity ELSE 0 END), 0) AS zone_a_sold,
+                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END), 0) AS zone_a_revenue,
 
-            IFNULL(
-                SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END) +
-                SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END), 
-            0) AS total_revenue
+                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN ot.quantity ELSE 0 END), 0) AS zone_b_sold,
+                IFNULL(SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END), 0) AS zone_b_revenue,
 
-        FROM Concerts c
-        LEFT JOIN Order_tickets ot ON c.id = ot.concert_id
-        WHERE c.id = ?
-        GROUP BY c.id;
-        
+                IFNULL(SUM(ot.quantity), 0) AS total_tickets_sold,
+                IFNULL(
+                    SUM(CASE WHEN ot.chosen_zone = 'Zone A' THEN (ot.quantity * c.ZoneA_Price) ELSE 0 END) +
+                    SUM(CASE WHEN ot.chosen_zone = 'Zone B' THEN (ot.quantity * c.ZoneB_Price) ELSE 0 END), 
+                0) AS total_revenue
+            FROM Concerts c
+            LEFT JOIN Order_tickets ot ON c.id = ot.concert_id
+            WHERE c.id = ?
+            GROUP BY c.id;
         `;
+        
         const concert = db.prepare(sql_query).get(concertId); 
-        if (!concert) {
-            return res.status(404).send("Concert not found");
-        }
+        if (!concert) return res.status(404).send("Concert not found");
         
         res.render("admin/sales_report", { concert });
     } catch (error) {
-        console.error("Error fetching sales report:", error);
-        return res.status(500).send("An error occurred while fetching the sales report.");
+        console.error(error);
+        res.status(500).send("Error fetching report");
     }
 });
 

@@ -108,10 +108,24 @@
                 <tbody>
                     <% 
                         const zones = [
-                            { name: 'Zone A', sold: concert.Sold_ZoneA_Ticket, total: concert.ZoneA_Ticket, revenue: concert.zone_a_revenue, color: 'bg-primary' },
-                            { name: 'Zone B', sold: concert.Sold_ZoneB_Ticket, total: concert.ZoneB_Ticket, revenue: concert.zone_b_revenue, color: 'bg-info' }
+                            { 
+                                name: 'Zone A', 
+                                sold: concert.zone_a_sold, 
+                                total: concert.ZoneA_Ticket, 
+                                revenue: concert.zone_a_revenue, 
+                                color: 'bg-primary' 
+                            },
+                            { 
+                                name: 'Zone B', 
+                                sold: concert.zone_b_sold, 
+                                total: concert.ZoneB_Ticket, 
+                                revenue: concert.zone_b_revenue, 
+                                color: 'bg-info' 
+                            }
                         ];
+
                         zones.forEach(zone => { 
+                            const available = zone.total - zone.sold;
                             const percent = Math.round((zone.sold / zone.total) * 100) || 0;
                     %>
                     <tr>
@@ -126,9 +140,8 @@
                         </td>
                         <td><%= zone.sold %> / <%= zone.total %></td>
                         <td>
-                            <% const remaining = zone.total - zone.sold; %>
-                            <span class="badge <%= remaining < 10 ? 'bg-danger' : 'bg-light text-dark border' %>">
-                                <%= remaining %> <%= __('left') %>
+                            <span class="badge <%= available < 10 ? 'bg-danger' : 'bg-success bg-opacity-10 text-success border border-success' %>">
+                                <%= available %> <%= __('left') %>
                             </span>
                         </td>
                         <td class="fw-bold text-end">$<%= zone.revenue.toLocaleString() %></td>

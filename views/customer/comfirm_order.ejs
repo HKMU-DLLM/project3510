@@ -11,47 +11,9 @@
     
     <style>
         body { background-color: #F5FBE6; font-family: "Playfair Display", serif; }
-        
-        .confirmation-card {
-            max-width: 700px;
-            margin: 50px auto;
-            background: white;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
-        }
-
-        .success-banner {
-            background-color: #BADA55;
-            color: #2c3e50;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .order-details {
-            padding: 40px;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px dashed #eee;
-        }
-
-        .total-row {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .playwrite { font-family: "Playwrite DK Uloopet", cursive; }
     </style>
 </head>
+
 <body>
 
     <div class="nav-bar playwrite-dk-uloopet">
@@ -100,10 +62,12 @@
 
                 <h5 class="fw-bold mb-3 text-uppercase text-muted small" style="letter-spacing: 2px;"><%= __('your_tickets') %></h5>
                 
-                <div class="detail-row">
-                    <span class="text-muted"><%= __('zone_quantity') %></span>
-                    <span class="fw-bold"><%= __('zone') %><%= order.chosen_zone %> (x<%= order.quantity %>)</span>
-                </div>
+                <% tickets.forEach(ticket => { %>
+                    <div class="detail-row">
+                        <span><%= ticket.chosen_zone %></span>
+                        <strong>x<%= ticket.quantity %></strong>
+                    </div>
+                <% }) %>
 
                 <div class="detail-row">
                     <span class="text-muted"><%= __('order_id') %></span>
@@ -118,7 +82,7 @@
                 <div class="total-row">
                     <span class="fw-bold fs-5"><%= __('total_paid') %></span>
                     <span class="fw-bold fs-3 text-dark">
-                        $<%= (order.total_paid) ? order.total_paid.toLocaleString() : '0.00' %>
+                        $<%= order.total_paid %>
                     </span>                
                 </div>
 
